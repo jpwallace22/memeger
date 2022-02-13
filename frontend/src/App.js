@@ -1,20 +1,25 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import { getPosts } from "./AppFunctions";
+import PostItem from "./components/PostItem";
 
 function App() {
+  const [posts, setPosts] = useState([]);
+
   useEffect(() => {
+    //get todays date in UTC
     const date = new Date().toISOString().split("T")[0];
+    //fetch posts for today
     async function getTodaysPosts() {
-      const data = await getPosts(date);
-      console.log(data);
+      const posts = await getPosts(date);
+      setPosts(posts);
     }
     getTodaysPosts();
   }, []);
 
   return (
     <div>
-      <h1>Memeger</h1>
+      <PostItem post={posts[0]} />
     </div>
   );
 }
