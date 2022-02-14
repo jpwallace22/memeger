@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-// import "./postList.css";
-import { getPosts } from "../AppFunctions";
-import PostItem from "./PostItem";
+import "./App.css";
+import { getPosts } from "./AppFunctions";
+import PostItem from "./components/PostItem";
 
-function PostList() {
+function App() {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -32,4 +32,4 @@ function PostList() {
   );
 }
 
-export default PostList;
+export default App;
