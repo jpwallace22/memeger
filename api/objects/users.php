@@ -35,5 +35,5 @@ class Users{
     $stmt->execute();
   
     return $stmt;
-    }
+}
 }
