@@ -1,6 +1,7 @@
 import React from "react";
 import "./postItem.css";
 import { ImArrowUp } from "react-icons/im";
+// eslint-disable-next-line no-unused-vars
 import { FaCommentAlt, FaRegHeart, FaHeart } from "react-icons/fa";
 import { IoShareOutline } from "react-icons/io5";
 
@@ -21,7 +22,8 @@ function PostItem({ post }) {
       <div className="post-ui">
         <div className="post-ui-left">
           <ImArrowUp /> <span className="votes">{post.votes} </span>
-          <FaCommentAlt /> <span className="comments">0</span>
+          <FaCommentAlt />{" "}
+          <span className="comments">{post.comments_count}</span>
         </div>
         <div className="post-ui-right">
           <FaRegHeart /> {/* //todo if user has favorite, fill heart pink */}
