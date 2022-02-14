@@ -7,7 +7,7 @@ import { IoShareOutline } from "react-icons/io5";
 
 function PostItem({ post }) {
   return (
-    <div className="post">
+    <div className="post card">
       <h3 className="post-title">{post.title}</h3>
       <div className="post-user-info">
         <img
@@ -21,13 +21,19 @@ function PostItem({ post }) {
       <img src={post.image} alt={post.title} className="post-image" />
       <div className="post-ui">
         <div className="post-ui-left">
-          <ImArrowUp /> <span className="votes">{post.votes} </span>
+          <ImArrowUp /> <span className="votes"> {post.votes} </span>
           <FaCommentAlt />{" "}
-          <span className="comments">{post.comments_count}</span>
+          <span className="comments"> {post.comments_count} </span>
         </div>
         <div className="post-ui-right">
-          <FaRegHeart /> {/* //todo if user has favorite, fill heart pink */}
-          <IoShareOutline />
+          <span className="fav">
+            {" "}
+            <FaRegHeart />{" "}
+          </span>
+          {/* //todo if user has favorite, fill heart pink */}
+          <span className="share">
+            <IoShareOutline />
+          </span>
         </div>
       </div>
       <p className="post-body">{post.body}</p>

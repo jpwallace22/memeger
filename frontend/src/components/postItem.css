@@ -1,7 +1,34 @@
 .post {
-  max-width: 600px;
+  max-width: 850px;
+  margin: 2rem auto;
+}
+.post-title {
+  margin: 0 0 1rem;
+}
+.post-user-info {
+  display: flex;
+  align-items: center;
+  margin: 0 0 0.8rem;
+}
+.post-user-info img {
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+.post-image {
+  width: 100%;
+  margin: 0 0 0.8rem;
 }
 .post-ui {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  margin: 0 0 1rem;
+  font-size: 1.3rem;
+}
+.post-ui .post-ui-right {
+  font-size: 1.5rem;
+}
+.post-ui .votes,
+.post-ui .fav {
+  margin-right: 0.5rem;
 }

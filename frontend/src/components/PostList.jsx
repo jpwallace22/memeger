@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-// import "./postList.css";
+import "./postList.css";
 import { getPosts } from "../AppFunctions";
 import PostItem from "./PostItem";
 
@@ -20,7 +20,7 @@ function PostList() {
   }, []);
 
   return (
-    <div>
+    <div className="post-list">
       {isLoading ? (
         "loading..."
       ) : posts.error ? (
