@@ -5,6 +5,7 @@ import PostItem from "./components/PostItem";
 
 function App() {
   const [posts, setPosts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     //get todays date in UTC
@@ -13,13 +14,20 @@ function App() {
     async function getTodaysPosts() {
       const posts = await getPosts(date);
       setPosts(posts);
+      setIsLoading(false);
     }
     getTodaysPosts();
   }, []);
 
   return (
     <div>
-      <PostItem post={posts[0]} />
+      {isLoading ? (
+        "loading..."
+      ) : posts.error ? (
+        <h2>{posts.error}</h2>
+      ) : (
+        posts.map((post, index) => <PostItem post={post} key={index} />)
+      )}
     </div>
   );
 }

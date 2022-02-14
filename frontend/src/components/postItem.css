@@ -1,0 +1,7 @@
+.post {
+  max-width: 600px;
+}
+.post-ui {
+  display: flex;
+  justify-content: space-between;
+}

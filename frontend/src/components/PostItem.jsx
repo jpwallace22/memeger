@@ -1,4 +1,8 @@
 import React from "react";
+import "./postItem.css";
+import { ImArrowUp } from "react-icons/im";
+import { FaCommentAlt, FaRegHeart, FaHeart } from "react-icons/fa";
+import { IoShareOutline } from "react-icons/io5";
 
 function PostItem({ post }) {
   return (
@@ -14,6 +18,17 @@ function PostItem({ post }) {
         <span>{post.username}</span>
       </div>
       <img src={post.image} alt={post.title} className="post-image" />
+      <div className="post-ui">
+        <div className="post-ui-left">
+          <ImArrowUp /> <span className="votes">{post.votes} </span>
+          <FaCommentAlt /> <span className="comments">0</span>
+        </div>
+        <div className="post-ui-right">
+          <FaRegHeart /> {/* //todo if user has favorite, fill heart pink */}
+          <IoShareOutline />
+        </div>
+      </div>
+      <p className="post-body">{post.body}</p>
     </div>
   );
 }
