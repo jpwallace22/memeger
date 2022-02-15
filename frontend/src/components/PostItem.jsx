@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./postItem.css";
 import { ImArrowUp } from "react-icons/im";
 // eslint-disable-next-line no-unused-vars
@@ -18,7 +19,9 @@ function PostItem({ post }) {
         />
         <span>{post.username}</span>
       </div>
-      <img src={post.image} alt={post.title} className="post-image" />
+      <Link to={`/post/${post.post_id}`}>
+        <img src={post.image} alt={post.title} className="post-image" />
+      </Link>
       <div className="post-ui">
         <div className="post-ui-left">
           <ImArrowUp /> <span className="votes"> {post.votes} </span>

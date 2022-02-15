@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./postList.css";
-import { getPosts } from "../AppFunctions";
+import { getPosts } from "./functions/postFunctions";
 import PostItem from "./PostItem";
 
 function PostList() {
