@@ -1,0 +1,13 @@
+header {
+  background-color: var(--darkest-grey);
+}
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header-logo {
+  width: 50%;
+  max-width: 300px;
+  margin: 0.8rem 0;
+}

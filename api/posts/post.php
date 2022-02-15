@@ -31,9 +31,6 @@ $num = $stmt->rowCount();
 // check if more than 0 record found
 if($num>0){
   
-    // define users array
-    $posts_arr=array();
-  
     // retrieve table contents
     // fetch() is faster than fetchAll() @http://stackoverflow.com/questions/2770630/pdofetchall-vs-pdofetch-in-a-loop
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
@@ -58,14 +55,14 @@ if($num>0){
             "is_published" => $is_published,
             "is_winner" => $is_winner,
         );
-        array_push($posts_arr, $post_item);
+        array_push($post_item);
     }
   
     // set response code - 200 OK
     http_response_code(200);
   
     // show users data in json format
-    echo json_encode($posts_arr);
+    echo json_encode($post_item);
 } else{
   
     // set response code - 404 Not found
