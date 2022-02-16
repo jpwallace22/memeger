@@ -1,6 +1,7 @@
 <?php
 
 /**
+ * ## https://phpdelusions.net/pdo/whitelisting_helper_function ##
  * Returns the value if is in array of allowed values
  * @param mixed     $value     [value to be evaluated]
  * @param array     $allowed  [values to be evaluated against]
