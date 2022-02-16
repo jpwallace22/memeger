@@ -28,9 +28,9 @@ class Posts{
     /**
      * RETRIEVE POSTS & INFO BY DATE WITH FLEXIBLE LIMIT AND OFFSET FOR PAGINATION 
      * 
-     * @param date string "YYYY-MM-DD" -- start date of the search
-     * @param limit integer (default 20) -- Amount of posts fetched
-     * @param offset integer (default 0) -- Where in the list it starts
+     * @param string    $date "YYYY-MM-DD" -- start date of the search
+     * @param int       $limit (default 20) -- Amount of posts fetched
+     * @param int       $offset (default 0) -- Where in the list it starts
      */
     function get_posts($date, $limit, $offset, $order){
         //todays date for the endpoint on the query
@@ -62,7 +62,7 @@ class Posts{
         //bind variables
         $stmt->bindValue(':amount', $limit, PDO::PARAM_INT);
         $stmt->bindValue(':off_set', $offset, PDO::PARAM_INT);
-        $stmt->bindValue(':startdate', $offset, PDO::PARAM_STR);
+        $stmt->bindValue(':startdate', $date, PDO::PARAM_STR);
         // execute query
         $stmt->execute();
       
@@ -72,7 +72,7 @@ class Posts{
      /**
      * RETRIEVE SINGLE POST AND ITS INFO
      * 
-     * @param id integer  -- post_id
+     * @param int $id -- post_id
      */
     function get_single_post($id){
         // select all query

@@ -1,0 +1,16 @@
+.dropdown {
+  position: relative;
+}
+.dropdown-menu {
+  display: none;
+  background-color: var(--darkest-grey);
+  width: 200px;
+  padding: 1rem;
+  position: absolute;
+}
+.dropdown-menu svg {
+  position: absolute;
+}
+.dropdown-menu.menu-open {
+  display: block;
+}

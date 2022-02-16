@@ -3,7 +3,7 @@ include '../config/config.php';
 
 /**
  * FETCHES SINGLE POST BY ID
- * ==> endpoint api/posts/post.php?post_id=@param
+ * :: endpoint ==> api/posts/post.php?post_id=@param
  * 
  *@param integer
  */

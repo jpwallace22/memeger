@@ -3,7 +3,7 @@ include '../config/config.php';
 
 /**
  * FETCHES THE USER BY ID
- * ==> endpoint api/users/user.php?user_id=@param 
+ * ::endpoint ==> api/users/user.php?user_id=@param 
  * 
  *@param integer
  */

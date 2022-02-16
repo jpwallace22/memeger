@@ -1,27 +1,46 @@
 import React, { useState } from "react";
-import "./dropdown.css";
+import "./sortDropdown.css";
 
-function Dropdown({ handleSort }) {
+function SortDropdown({ handleSort }) {
   const [voteActive, setVoteActive] = useState(false);
   const [newestActive, setNewestActive] = useState(true);
+  const [menuOpen, setMenuOpen] = useState(false);
 
+  /**
+   * Fetches and sorts data based on target
+   * [also closes the dropdown menu and sets the title based on click]
+   * @param {node} target current element being clicked
+   */
   const handleClick = (target) => {
     const data = target.dataset.value;
-    console.log(data);
-    setNewestActive(!newestActive);
-    setVoteActive(!voteActive);
+    if (data === "vote") {
+      setNewestActive(false);
+      setVoteActive(true);
+    }
+    if (data === "date") {
+      setNewestActive(true);
+      setVoteActive(false);
+    }
+    setMenuOpen(false);
     handleSort(`p.${data}`);
+  };
+
+  // toggles the dropdown menu open or closed
+  const handleMenu = () => {
+    setMenuOpen(!menuOpen);
   };
 
   return (
     <div className="dropdown">
-      <div className="dropdown-title">
+      <div className="dropdown-title" onClick={handleMenu}>
         <span>
+          {/* makes the title whatever element is currently selected */}
           {document.querySelector(".dropdown-option.is-active") &&
             document.querySelector(".dropdown-option.is-active").innerHTML}
         </span>
       </div>
-      <div className="dropdown-menu">
+      <div className={menuOpen ? "dropdown-menu menu-open" : "dropdown-menu"}>
+        {/* <svg> is the little triangle on top of box */}
         <svg
           width="24"
           height="8"
@@ -38,14 +57,18 @@ function Dropdown({ handleSort }) {
         </svg>
         <div className="dropdown-list">
           <div
-            className="dropdown-option"
+            className={
+              voteActive ? "dropdown-option is-active" : "dropdown-option"
+            }
             data-value="votes"
             onClick={({ target }) => handleClick(target)}
           >
             Most Votes
           </div>
           <div
-            className="dropdown-option is-active"
+            className={
+              newestActive ? "dropdown-option is-active" : "dropdown-option"
+            }
             data-value="date"
             onClick={({ target }) => handleClick(target)}
           >
@@ -57,4 +80,4 @@ function Dropdown({ handleSort }) {
   );
 }
 
-export default Dropdown;
+export default SortDropdown;

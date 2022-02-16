@@ -2,9 +2,9 @@
 
 /**
  * Returns the value if is in array of allowed values
- * @param value     any     [value to be evaluated]
- * @param allowed   array   [values to be evaluated against]
- * @param message   string  [displayed message for errors]
+ * @param mixed     $value     [value to be evaluated]
+ * @param array     $allowed  [values to be evaluated against]
+ * @param string    $message  [displayed message for errors]
  */
 function white_list( $value, $allowed, $message) {
     if ($value === null) {

@@ -3,9 +3,9 @@ include '../config/config.php';
 
 /**
  * FETCHES ALL POSTS
- * ==> endpoint api/posts/date.php?date=@param&limit=@param&offset=@param 
+ * :: endpoint ==> /api/posts/date.php?date=@param&limit=@param&offset=@param&order=@param 
  * 
- *@param integer
+ *@param mixed
  */
 
 // required headers
