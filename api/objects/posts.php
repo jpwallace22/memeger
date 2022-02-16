@@ -30,7 +30,7 @@ class Posts{
      * @param limit integer (default 20) -- Amount of posts fetched
      * @param offset integer (default 0) -- Where in the list it starts
      */
-    function get_posts($date, $limit, $offset){
+    function get_posts($date, $limit, $offset, $order){
         $todays_date = date("Y-m-d");
 
         // select all query
@@ -44,14 +44,17 @@ class Posts{
                     BETWEEN '$date 00:00:00' AND '$todays_date 23:59:59'
                         AND p.is_published = 1
                     GROUP BY p.post_id
-                    ORDER BY p.date DESC
+                    ORDER BY :abc DESC
                     LIMIT :amount OFFSET :off_set";
 
+        //todo need to add ability to order by the $order variable
+        
         // prepare query statement
         $stmt = $this->conn->prepare($query);
         //bind variables
         $stmt->bindValue(':amount', $limit, PDO::PARAM_INT);
         $stmt->bindValue(':off_set', $offset, PDO::PARAM_INT);
+        $stmt->bindValue(':abc', $order, PDO::PARAM_STR);
         // execute query
         $stmt->execute();
       

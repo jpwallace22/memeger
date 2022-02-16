@@ -1,5 +1,16 @@
+.no-mobile {
+  display: none;
+}
 .card {
   background-color: var(--grey);
-  padding: 2rem;
+  padding: 2rem 1rem;
   border-radius: 2%;
+}
+@media screen and (min-width: 720px) {
+  .no-mobile {
+    display: initial;
+  }
+  .card {
+    padding: 2rem;
+  }
 }

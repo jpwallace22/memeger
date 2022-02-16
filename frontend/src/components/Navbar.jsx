@@ -3,17 +3,22 @@ import "./navbar.css";
 import { GoDiffAdded } from "react-icons/go";
 import { FaUser } from "react-icons/fa";
 import { ReactComponent as Logo } from "../assets/images/logo.svg";
+import Button from "./Button";
+import { Link } from "react-router-dom";
 
 function Navbar() {
   return (
     <header>
       <nav className="navbar">
-        <div className="add-post">
-          <GoDiffAdded />
-        </div>
-        <Logo className="header-logo" />
+        <Button primary>
+          <GoDiffAdded size={24} />
+          <span className="no-mobile">Post</span>
+        </Button>
+        <Link to="/" className="header-logo">
+          <Logo />
+        </Link>
         <div className="user-button">
-          <FaUser />
+          <FaUser size={24} />
         </div>
       </nav>
     </header>

@@ -1,0 +1,24 @@
+.btn {
+  font-family: "Poppins", sans-serif, "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  min-height: 30px;
+  padding: 0.5rem 0.8rem;
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: none;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+.btn.primary {
+  color: var(--white);
+  background-color: var(--pink);
+}
+.btn.secondary {
+  color: var(--darkest-grey);
+  background-color: var(--gold);
+}
+.btn span {
+  margin-left: 0.5rem;
+}

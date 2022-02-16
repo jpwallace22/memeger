@@ -4,11 +4,17 @@
  * @param date string "YYYY-MM-DD" -- start date of the search
  * @param limit integer (default 20) -- Amount of posts fetched
  * @param offset integer (default 0) -- Where in the list it starts
+ * @param order string (default 'p.date') -- Order by date or votes
  * @returns - JSON data
  */
-export const getPosts = async (date, limit = 20, offset = 0) => {
+export const getPosts = async (
+  date,
+  limit = 20,
+  offset = 0,
+  order = "p.date"
+) => {
   const response = await fetch(
-    `/api/posts/date.php?date=${date}&limit=${limit}&offset=${offset}`
+    `/api/posts/date.php?date=${date}&limit=${limit}&offset=${offset}&order=${order}`
   );
   const posts = await response.json();
   return posts;

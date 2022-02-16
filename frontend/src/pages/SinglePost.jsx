@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import PostItem from "../components/PostItem";
 import { getSinglePost } from "../assets/functions/postFunctions";
+import Navbar from "../components/Navbar";
 
 function SinglePost() {
   const [post, setPost] = useState([]);
@@ -21,6 +22,7 @@ function SinglePost() {
   //todo add loading widget
   return (
     <>
+      <Navbar />
       {isLoading ? (
         "loading..."
       ) : post.error ? (

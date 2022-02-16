@@ -24,10 +24,11 @@ $db = $database->getConnection();
 $posts = new Posts($db);
   
 // query posts
-$date = $_GET["date"];
-$limit = $_GET["limit"];
-$offset = $_GET["offset"];
-$stmt = $posts->get_posts($date, $limit, $offset);
+$date = trim( strip_tags( $_GET["date"] ) );
+$limit = trim( strip_tags( $_GET["limit"] ) );
+$offset = trim( strip_tags( $_GET["offset"] ) );
+$order = $_GET["order"];
+$stmt = $posts->get_posts($date, $limit, $offset, $order);
 $num = $stmt->rowCount();
 
 // check if more than 0 record found
