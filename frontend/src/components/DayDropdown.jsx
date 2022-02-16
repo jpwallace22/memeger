@@ -3,8 +3,8 @@ import "./dropdown.css";
 import { BsCaretRightFill } from "react-icons/bs";
 
 function SortDropdown({ handleSort }) {
+  const [todayActive, setTodayActive] = useState(true);
   const [voteActive, setVoteActive] = useState(false);
-  const [newestActive, setNewestActive] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
 
   /**
@@ -15,11 +15,11 @@ function SortDropdown({ handleSort }) {
   const handleClick = (target) => {
     const data = target.dataset.value;
     if (data === "vote") {
-      setNewestActive(false);
+      //   setNewestActive(false);
       setVoteActive(true);
     }
     if (data === "date") {
-      setNewestActive(true);
+      //   setNewestActive(true);
       setVoteActive(false);
     }
     setMenuOpen(false);
@@ -34,14 +34,14 @@ function SortDropdown({ handleSort }) {
   return (
     <div
       className={
-        menuOpen ? "dropdown sort-dropdown active" : "dropdown sort-dropdown"
+        menuOpen ? "dropdown day-dropdown active" : "dropdown day-dropdown"
       }
     >
       <div className="dropdown-title" onClick={handleMenu}>
         <span>
           {/* makes the title whatever element is currently selected */}
-          {document.querySelector(".dropdown-option.is-active") &&
-            document.querySelector(".dropdown-option.is-active").innerHTML}
+          {document.querySelector(".dropdown-option.active") &&
+            document.querySelector(".dropdown-option.active").innerHTML}
           <BsCaretRightFill size={15} className="dropdown-caret" />
         </span>
       </div>
@@ -50,7 +50,7 @@ function SortDropdown({ handleSort }) {
         <svg
           width="24"
           height="8"
-          viewBox="0 0 24 8"
+          //   viewBox="0 0 24 8"
           className="dropdown-triangle"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -64,21 +64,39 @@ function SortDropdown({ handleSort }) {
         <ul className="dropdown-list">
           <li
             className={
-              voteActive ? "dropdown-option is-active" : "dropdown-option"
+              todayActive ? "dropdown-option active" : "dropdown-option"
             }
             data-value="votes"
             onClick={({ target }) => handleClick(target)}
           >
-            Most Votes
+            Today
           </li>
           <li
             className={
-              newestActive ? "dropdown-option is-active" : "dropdown-option"
+              voteActive ? "dropdown-option active" : "dropdown-option"
+            }
+            data-value="votes"
+            onClick={({ target }) => handleClick(target)}
+          >
+            Last Week
+          </li>
+          <li
+            className={
+              voteActive ? "dropdown-option active" : "dropdown-option"
+            }
+            data-value="votes"
+            onClick={({ target }) => handleClick(target)}
+          >
+            Last Month
+          </li>
+          <li
+            className={
+              voteActive ? "dropdown-option active" : "dropdown-option"
             }
             data-value="date"
             onClick={({ target }) => handleClick(target)}
           >
-            Newest Posts
+            All Time
           </li>
         </ul>
       </div>

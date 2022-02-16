@@ -4,6 +4,7 @@ import { getPosts } from "../assets/functions/postFunctions";
 import PostItem from "../components/PostItem";
 import Navbar from "../components/Navbar";
 import SortDropdown from "../components/SortDropdown";
+import DayDropdown from "../components/DayDropdown";
 
 function Home() {
   const [posts, setPosts] = useState([]);
@@ -39,8 +40,9 @@ function Home() {
   return (
     <>
       <Navbar />
-      <div className="container">
+      <div className="homepage-ui">
         <SortDropdown handleSort={handleSort} />
+        <DayDropdown handleSort={handleSort} />
       </div>
       <div className="post-list">
         {isLoading ? (
