@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import "./dropdown.css";
 
 function Dropdown({ handleSort }) {
-  const voteClick = () => {
-    handleSort("p.votes");
+  const [voteActive, setVoteActive] = useState(false);
+  const [newestActive, setNewestActive] = useState(true);
+
+  const handleClick = (target) => {
+    const data = target.dataset.value;
+    console.log(data);
+    setNewestActive(!newestActive);
+    setVoteActive(!voteActive);
+    handleSort(`p.${data}`);
   };
+
   return (
     <div className="dropdown">
       <div className="dropdown-title">
@@ -29,10 +37,20 @@ function Dropdown({ handleSort }) {
           ></path>
         </svg>
         <div className="dropdown-list">
-          <div className="dropdown-option" onClick={voteClick}>
+          <div
+            className="dropdown-option"
+            data-value="votes"
+            onClick={({ target }) => handleClick(target)}
+          >
             Most Votes
           </div>
-          <div className="dropdown-option is-active">Newest Posts</div>
+          <div
+            className="dropdown-option is-active"
+            data-value="date"
+            onClick={({ target }) => handleClick(target)}
+          >
+            Newest Posts
+          </div>
         </div>
       </div>
     </div>

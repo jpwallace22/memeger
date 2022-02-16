@@ -21,12 +21,11 @@ function Home() {
       console.log("fresh posts");
     }
     getTodaysPosts();
-  }, []);
+  }, [date]);
 
   const handleSort = async (order) => {
     setIsLoading(true);
     const posts = await getPosts(date, 20, 0, order);
-    console.log("vote");
     setPosts(posts);
     setIsLoading(false);
   };
@@ -38,7 +37,7 @@ function Home() {
     <>
       <Navbar />
       <div className="container">
-        {/* <Dropdown options={sortOptions} handleSort={handleSort} /> */}
+        <Dropdown options={sortOptions} handleSort={handleSort} />
       </div>
       <div className="post-list">
         {isLoading ? (
