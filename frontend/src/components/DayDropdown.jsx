@@ -4,26 +4,58 @@ import { BsCaretRightFill } from "react-icons/bs";
 
 function SortDropdown({ handleSort }) {
   const [todayActive, setTodayActive] = useState(true);
-  const [voteActive, setVoteActive] = useState(false);
+  const [weekActive, setWeekActive] = useState(false);
+  const [monthActive, setMonthActive] = useState(false);
+  const [allTimeActive, setAllTimeActive] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
+  //sets all states to false
+  const allStateFalse = () => {
+    setTodayActive(false);
+    setWeekActive(false);
+    setMonthActive(false);
+    setAllTimeActive(false);
+  };
+
+  //gets the date in ISO and offsets for past days
+  const getDate = (offset = 0) => {
+    return new Date(new Date().setDate(new Date().getDate() - offset))
+      .toISOString()
+      .split("T")[0];
+  };
   /**
    * Fetches and sorts data based on target
    * [also closes the dropdown menu and sets the title based on target]
    * @param {node} target current element being clicked
    */
   const handleClick = (target) => {
-    const data = target.dataset.value;
-    if (data === "vote") {
-      //   setNewestActive(false);
-      setVoteActive(true);
-    }
-    if (data === "date") {
-      //   setNewestActive(true);
-      setVoteActive(false);
+    let data = target.dataset.value;
+    switch (data) {
+      case "today":
+        allStateFalse();
+        setTodayActive(true);
+        data = getDate();
+        break;
+      case "week":
+        allStateFalse();
+        setWeekActive(true);
+        data = getDate(7);
+        break;
+      case "month":
+        allStateFalse();
+        setMonthActive(true);
+        data = getDate(30);
+        break;
+      case "allTime":
+        allStateFalse();
+        setAllTimeActive(true);
+        data = "0000-00-00 00:00:00";
+        break;
+      default:
+        break;
     }
     setMenuOpen(false);
-    handleSort(`p.${data}`);
+    handleSort(data, undefined);
   };
 
   // toggles the dropdown menu open or closed
@@ -50,7 +82,7 @@ function SortDropdown({ handleSort }) {
         <svg
           width="24"
           height="8"
-          //   viewBox="0 0 24 8"
+          viewBox="0 0 24 8"
           className="dropdown-triangle"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -66,34 +98,34 @@ function SortDropdown({ handleSort }) {
             className={
               todayActive ? "dropdown-option active" : "dropdown-option"
             }
-            data-value="votes"
+            data-value="today"
             onClick={({ target }) => handleClick(target)}
           >
             Today
           </li>
           <li
             className={
-              voteActive ? "dropdown-option active" : "dropdown-option"
+              weekActive ? "dropdown-option active" : "dropdown-option"
             }
-            data-value="votes"
+            data-value="week"
             onClick={({ target }) => handleClick(target)}
           >
             Last Week
           </li>
           <li
             className={
-              voteActive ? "dropdown-option active" : "dropdown-option"
+              monthActive ? "dropdown-option active" : "dropdown-option"
             }
-            data-value="votes"
+            data-value="month"
             onClick={({ target }) => handleClick(target)}
           >
             Last Month
           </li>
           <li
             className={
-              voteActive ? "dropdown-option active" : "dropdown-option"
+              allTimeActive ? "dropdown-option active" : "dropdown-option"
             }
-            data-value="date"
+            data-value="allTime"
             onClick={({ target }) => handleClick(target)}
           >
             All Time

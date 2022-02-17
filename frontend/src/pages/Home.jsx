@@ -9,9 +9,8 @@ import DayDropdown from "../components/DayDropdown";
 function Home() {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
-  //get todays date in UTC
-  const date = new Date().toISOString().split("T")[0];
+  const [sortBy, setSortBy] = useState("p.date");
+  const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
 
   useEffect(() => {
     //fetch posts for today
@@ -19,20 +18,26 @@ function Home() {
       const posts = await getPosts(date);
       setPosts(posts);
       setIsLoading(false);
-      console.log("fresh posts");
     }
     getTodaysPosts();
   }, [date]);
 
   /**
    * Takes the data from the dropdown, fetches new posts
-   * and updates the posts state
-   * @param {string} order - either 'p.vote' or 'p.date'
+   * and updates the posts state, and sorting states
+   * @param {string} sortDate - 0000-00-00 00:00:00 - default is current date state
+   * @param {string} order - either 'votes' or 'p.date' - default is current sortBy state
    */
-  const handleSort = async (order) => {
+  const handleSort = async (sortDate = date, order = sortBy) => {
     setIsLoading(true);
-    const posts = await getPosts(date, 20, 0, order);
+    if (order === "date") {
+      order = "p.date";
+    }
+    console.log(order);
+    const posts = await getPosts(sortDate, 20, 0, order);
     setPosts(posts);
+    setSortBy(order);
+    setDate(date);
     setIsLoading(false);
   };
 

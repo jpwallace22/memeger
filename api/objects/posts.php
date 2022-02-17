@@ -37,19 +37,21 @@ class Posts{
         $todays_date = date("Y-m-d");
 
         //only allow these exact strings through for order
-        $allowed_orders = ['p.votes','p.date'];
+        $allowed_orders = ['votes','p.date'];
         $order = white_list($order, $allowed_orders, "Nice try, but you're not hacking me!");
 
         //add time for the beginning of the day
         $date = "$date 00:00:00";
 
         // select all query
-        $query = "  SELECT p.*, COUNT(c.comment_id) as comments_count, u.username, u.profile_pic
+        $query = "  SELECT p.*, COUNT( DISTINCT c.comment_id) AS comments_count, u.username, u.profile_pic, COUNT( DISTINCT v.user_id) AS votes
                     FROM posts AS p
                         LEFT JOIN comments AS c
                         ON p.post_id = c.post_id
                         LEFT JOIN users AS u
                         ON p.user_id = u.user_id
+                        LEFT JOIN votes AS v
+                        ON p.post_id = v.post_id
                     WHERE p.date
                     BETWEEN :startdate AND '$todays_date 23:59:59'
                         AND p.is_published = 1

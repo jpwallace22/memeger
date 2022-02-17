@@ -14,7 +14,7 @@ function SortDropdown({ handleSort }) {
    */
   const handleClick = (target) => {
     const data = target.dataset.value;
-    if (data === "vote") {
+    if (data === "votes") {
       setNewestActive(false);
       setVoteActive(true);
     }
@@ -23,7 +23,7 @@ function SortDropdown({ handleSort }) {
       setVoteActive(false);
     }
     setMenuOpen(false);
-    handleSort(`p.${data}`);
+    handleSort(undefined, data);
   };
 
   // toggles the dropdown menu open or closed
