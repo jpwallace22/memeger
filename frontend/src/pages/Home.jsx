@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { getPosts } from "../assets/functions/functions";
+import { getPosts } from "../assets/functions";
 import PostItem from "../components/PostItem";
 import Navbar from "../components/Navbar";
 import SortDropdown from "../components/SortDropdown";

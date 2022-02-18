@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./postItem.css";
+import "../styles/postItem.css";
 import { ImArrowUp } from "react-icons/im";
 // eslint-disable-next-line no-unused-vars
 import { FaCommentAlt, FaRegHeart, FaHeart } from "react-icons/fa";

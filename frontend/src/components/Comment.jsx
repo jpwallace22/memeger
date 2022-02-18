@@ -1,6 +1,6 @@
 import React from "react";
-import "./comment.css";
-import { timeAgo } from "../assets/functions/functions";
+import "../styles/comment.css";
+import { timeAgo } from "../assets/functions";
 
 function Comment({ comment }) {
   return (

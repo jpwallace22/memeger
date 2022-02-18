@@ -17,4 +17,9 @@ header {
   display: flex;
   align-items: center;
   margin-right: 0.5rem;
+  cursor: pointer;
+}
+.user-button svg:hover {
+  color: var(--pink);
+  transform: scale(1.02);
 }

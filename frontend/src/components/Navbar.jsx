@@ -1,5 +1,5 @@
 import React from "react";
-import "./navbar.css";
+import "../styles/navbar.css";
 import { GoDiffAdded } from "react-icons/go";
 import { FaUser } from "react-icons/fa";
 import { ReactComponent as Logo } from "../assets/images/logo.svg";
@@ -17,9 +17,11 @@ function Navbar() {
         <Link to="/" className="header-logo">
           <Logo />
         </Link>
-        <div className="user-button">
-          <FaUser size={24} />
-        </div>
+        <Link to="/login">
+          <div className="user-button">
+            <FaUser size={24} />
+          </div>
+        </Link>
       </nav>
     </header>
   );

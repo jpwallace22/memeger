@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import PostItem from "../components/PostItem";
-import { getSinglePost } from "../assets/functions/functions";
+import { getSinglePost } from "../assets/functions";
 import Navbar from "../components/Navbar";
 import Comment from "../components/Comment";
 

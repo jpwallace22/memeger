@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./dropdown.css";
+import "../styles/dropdown.css";
 import { BsCaretRightFill } from "react-icons/bs";
 
 function SortDropdown({ handleSort }) {

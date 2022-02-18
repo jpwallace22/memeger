@@ -10,6 +10,7 @@
   border: none;
   text-transform: uppercase;
   font-weight: 800;
+  cursor: pointer;
 }
 .btn.primary {
   color: var(--white);
@@ -21,4 +22,8 @@
 }
 .btn span {
   margin-left: 0.5rem;
+}
+.btn:hover {
+  filter: brightness(1.2);
+  transform: scale(1.02);
 }
