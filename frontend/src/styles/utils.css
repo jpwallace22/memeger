@@ -6,6 +6,13 @@
   padding: 2rem 1rem;
   border-radius: 2%;
 }
+.error {
+  font-weight: 600;
+  color: rgb(255, 75, 75);
+}
+.input-error {
+  border: 2px rgb(255, 75, 75) solid !important;
+}
 .sr-only:not(:focus):not(:active) {
   clip: rect(0 0 0 0);
   clip-path: inset(50%);

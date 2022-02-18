@@ -12,8 +12,9 @@ class Users{
     public $password;
     public $profile_pic;
     public $bio;
-    public $is_admin;
     public $join_date;
+    public $last_login;
+    public $is_admin;
   
     // constructor with $db as database connection
     public function __construct($db){
@@ -30,10 +31,42 @@ class Users{
   
     // prepare query statement
     $stmt = $this->conn->prepare($query);
-  
     // execute query
     $stmt->execute();
+    return $stmt;
+    }
+
+    /**
+     * CHECKS IF USERNAME IS IN DATABASE
+     */
+    function check_username($username){
+    // select all query
+    
+    $query = "SELECT *
+                FROM $this->table_name
+                WHERE username = :username ";
   
+    // prepare query statement
+    $stmt = $this->conn->prepare($query);
+    // execute query
+    $stmt->execute(array( 'username' => $username ));
+    return $stmt;
+    }
+
+    /**
+     * CHECKS IF EMAIL IS IN DATABASE
+     */
+    function check_email($email){
+    // select all query
+
+    $query = "SELECT *
+                FROM $this->table_name
+                WHERE email = :email ";
+  
+    // prepare query statement
+    $stmt = $this->conn->prepare($query);
+    // execute query
+    $stmt->execute(array( 'email' => $email ));
     return $stmt;
     }
 }

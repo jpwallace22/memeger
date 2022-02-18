@@ -16,8 +16,9 @@ footer .links {
 }
 footer .social {
   display: flex;
-  gap: 8%;
+  gap: 5%;
   font-size: 2rem;
+  line-height: 2;
   justify-content: center;
   list-style: none;
 }

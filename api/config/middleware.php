@@ -18,3 +18,13 @@ function white_list( $value, $allowed, $message) {
         return $value;
     }
 }
+
+/**
+ * SANITIZE FUNCTIONS
+ */
+function clean_string( $string ){
+    return trim( strip_tags( $string ) );
+};
+function clean_email( $email ){
+    return filter_var( $email, FILTER_SANITIZE_EMAIL);
+}

@@ -7,7 +7,7 @@
 .register .login-button {
   width: 40%;
   text-align: center;
-  margin-top: 1rem;
+  margin: 1rem 0;
 }
 .register.login input {
   margin: 0.7rem 0 1.5rem;

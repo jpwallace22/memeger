@@ -28,3 +28,8 @@
   filter: brightness(1.2);
   transform: scale(1.02);
 }
+.btn:disabled:hover {
+  transform: scale(1);
+  cursor: not-allowed;
+  filter: none;
+}

@@ -12,13 +12,27 @@ function Register() {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [seePassword, setSeePassword] = useState(false);
+  const [errors, setErrors] = useState({});
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setUsername("asdf");
+    const res = await fetch(
+      `/api/users/register.php?username=${username}&email=${email}&password=${password}`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json, text/plain, */*",
+          "Content-Type": "application/ charset=UTF-8",
+        },
+      }
+    );
+    const data = await res.json();
+    setErrors(data.errors);
   };
+
+  //TODO add front end validation to ease the server
 
   return (
     <main className="login register">
@@ -33,7 +47,9 @@ function Register() {
       </div>
       <form className="card" onSubmit={(e) => handleSubmit(e)}>
         <label htmlFor="username">Username</label>
+        <div className="error">{errors.username && errors.username}</div>
         <input
+          className={errors.username && "input-error"}
           type="text"
           name="username"
           id="username"
@@ -42,8 +58,10 @@ function Register() {
           onChange={({ target }) => setUsername(target.value)}
         />
         <label htmlFor="password">Password</label>
+        <div className="error">{errors.password && errors.password}</div>
         <div className="password">
           <input
+            className={errors.password && "input-error"}
             type={seePassword ? "text" : "password"}
             name="password"
             id="password"
@@ -58,7 +76,9 @@ function Register() {
           )}
         </div>
         <label htmlFor="email">Email</label>
+        <div className="error">{errors.email && errors.email}</div>
         <input
+          className={errors.email && "input-error"}
           type="text"
           name="email"
           id="email"
@@ -67,7 +87,11 @@ function Register() {
           onChange={({ target }) => setEmail(target.value)}
         />
         <div className="login-ui">
-          <Button secondary className="login-button">
+          <Button
+            secondary
+            className="login-button"
+            disabled={!username || !password || !email}
+          >
             Register
           </Button>
           <Link to="/login" className="register-question">
