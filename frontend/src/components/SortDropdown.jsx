@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import GlobalContext from "../context/GlobalContext";
 import "../styles/dropdown.css";
 import { BsCaretRightFill } from "react-icons/bs";
 
 function SortDropdown({ handleSort }) {
+  const { setSortBy } = useContext(GlobalContext);
+
   const [voteActive, setVoteActive] = useState(false);
   const [newestActive, setNewestActive] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -13,7 +16,7 @@ function SortDropdown({ handleSort }) {
    * @param {node} target current element being clicked
    */
   const handleClick = (target) => {
-    const data = target.dataset.value;
+    let data = target.dataset.value;
     if (data === "votes") {
       setNewestActive(false);
       setVoteActive(true);
@@ -21,9 +24,10 @@ function SortDropdown({ handleSort }) {
     if (data === "date") {
       setNewestActive(true);
       setVoteActive(false);
+      data = "p.date";
     }
     setMenuOpen(false);
-    handleSort(undefined, data);
+    setSortBy(data);
   };
 
   // toggles the dropdown menu open or closed

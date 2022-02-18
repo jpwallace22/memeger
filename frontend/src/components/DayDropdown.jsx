@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import GlobalContext from "../context/GlobalContext";
 import "../styles/dropdown.css";
 import { BsCaretRightFill } from "react-icons/bs";
 
 function SortDropdown({ handleSort }) {
+  const { setDate } = useContext(GlobalContext);
+
   const [todayActive, setTodayActive] = useState(true);
   const [weekActive, setWeekActive] = useState(false);
   const [monthActive, setMonthActive] = useState(false);
@@ -55,7 +58,7 @@ function SortDropdown({ handleSort }) {
         break;
     }
     setMenuOpen(false);
-    handleSort(data);
+    setDate(data);
   };
 
   // toggles the dropdown menu open or closed

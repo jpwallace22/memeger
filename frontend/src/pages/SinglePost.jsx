@@ -36,9 +36,11 @@ function SinglePost() {
         )}
         <div className="card">
           <h2>{post.comments_count} Comments</h2>
-          {comments.map((comment, index) => (
-            <Comment comment={comment} key={index} />
-          ))}
+          {comments.error
+            ? comments.error
+            : comments.map((comment, index) => (
+                <Comment comment={comment} key={index} />
+              ))}
         </div>
       </div>
     </>
