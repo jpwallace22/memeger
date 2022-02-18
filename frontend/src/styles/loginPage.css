@@ -1,3 +1,6 @@
+.login {
+  min-height: calc(100vh - 200px - 4rem);
+}
 .login .back svg {
   font-size: 4rem;
   margin: 1rem 2rem 0;
@@ -12,9 +15,9 @@
   max-width: 600px;
 }
 .login form {
-  width: 80%;
+  width: 100%;
   max-width: 550px;
-  margin: 0 auto;
+  margin: 4rem auto;
 }
 .login input {
   display: block;
@@ -23,6 +26,8 @@
   margin: 1.5rem 0;
   font-size: 1.2rem;
   padding-left: 0.6rem;
+  border: 2px var(--light-grey) solid;
+  background-color: var(--white);
 }
 div.password {
   position: relative;
@@ -37,9 +42,17 @@ div.password .forget {
 div.password svg {
   position: absolute;
   top: 18%;
-  right: 25%;
+  right: 110px;
   font-size: 2rem;
   color: var(--darkest-grey);
+}
+.login-ui {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+.register-question:hover {
+  color: var(--gold);
 }
 .login-button {
   min-height: 50px;

@@ -26,23 +26,25 @@ function SinglePost() {
   return (
     <>
       <Navbar />
-      <div className="single-post">
-        {isLoading ? (
-          "loading..."
-        ) : post.error ? (
-          <h2>{post.error}</h2>
-        ) : (
-          <PostItem post={post} />
-        )}
-        <div className="card">
-          <h2>{post.comments_count} Comments</h2>
-          {comments.error
-            ? comments.error
-            : comments.map((comment, index) => (
-                <Comment comment={comment} key={index} />
-              ))}
+      <main>
+        <div className="single-post">
+          {isLoading ? (
+            "loading..."
+          ) : post.error ? (
+            <h2>{post.error}</h2>
+          ) : (
+            <PostItem post={post} />
+          )}
+          <div className="card">
+            <h2>{post.comments_count} Comments</h2>
+            {comments.error
+              ? comments.error
+              : comments.map((comment, index) => (
+                  <Comment comment={comment} key={index} />
+                ))}
+          </div>
         </div>
-      </div>
+      </main>
     </>
   );
 }

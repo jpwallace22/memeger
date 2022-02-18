@@ -5,6 +5,7 @@ import { BsCaretRightFill } from "react-icons/bs";
 
 function SortDropdown({ handleSort }) {
   const { setDate } = useContext(GlobalContext);
+  //TODO set sort display to global state
 
   const [todayActive, setTodayActive] = useState(true);
   const [weekActive, setWeekActive] = useState(false);

@@ -1,0 +1,14 @@
+.register div.password svg {
+  right: 20px;
+}
+.register .login-ui {
+  flex-direction: row-reverse;
+}
+.register .login-button {
+  width: 40%;
+  text-align: center;
+  margin-top: 1rem;
+}
+.register.login input {
+  margin: 0.7rem 0 1.5rem;
+}

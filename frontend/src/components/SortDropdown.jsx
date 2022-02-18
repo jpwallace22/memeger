@@ -5,6 +5,7 @@ import { BsCaretRightFill } from "react-icons/bs";
 
 function SortDropdown({ handleSort }) {
   const { setSortBy } = useContext(GlobalContext);
+  //TODO set sort display to global state
 
   const [voteActive, setVoteActive] = useState(false);
   const [newestActive, setNewestActive] = useState(true);

@@ -42,19 +42,21 @@ function Home() {
   return (
     <>
       <Navbar />
-      <div className="homepage-ui">
-        <SortDropdown />
-        <DayDropdown handleSort={handleSort} />
-      </div>
-      <div className="post-list">
-        {isLoading ? (
-          "loading..."
-        ) : posts.error ? (
-          <h2>{posts.error}</h2>
-        ) : (
-          posts.map((post, index) => <PostItem post={post} key={index} />)
-        )}
-      </div>
+      <main>
+        <div className="homepage-ui">
+          <SortDropdown />
+          <DayDropdown handleSort={handleSort} />
+        </div>
+        <div className="post-list">
+          {isLoading ? (
+            "loading..."
+          ) : posts.error ? (
+            <h2>{posts.error}</h2>
+          ) : (
+            posts.map((post, index) => <PostItem post={post} key={index} />)
+          )}
+        </div>
+      </main>
     </>
   );
 }
