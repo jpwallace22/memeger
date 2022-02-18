@@ -49,13 +49,13 @@ function SortDropdown({ handleSort }) {
       case "allTime":
         allStateFalse();
         setAllTimeActive(true);
-        data = "0000-00-00 00:00:00";
+        data = "0000-00-00";
         break;
       default:
         break;
     }
     setMenuOpen(false);
-    handleSort(data, undefined);
+    handleSort(data);
   };
 
   // toggles the dropdown menu open or closed

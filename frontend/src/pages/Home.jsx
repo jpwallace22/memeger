@@ -12,10 +12,12 @@ function Home() {
   const [sortBy, setSortBy] = useState("p.date");
   const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
 
+  //TODO make sortBy and date global state
+
   useEffect(() => {
     //fetch posts for today
     async function getTodaysPosts() {
-      const posts = await getPosts(date);
+      const posts = await getPosts(date, undefined, undefined, sortBy);
       setPosts(posts);
       setIsLoading(false);
     }
@@ -36,7 +38,7 @@ function Home() {
     const posts = await getPosts(sortDate, 20, 0, order);
     setPosts(posts);
     setSortBy(order);
-    setDate(date);
+    setDate(sortDate);
     setIsLoading(false);
   };
 

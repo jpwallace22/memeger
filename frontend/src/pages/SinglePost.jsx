@@ -17,7 +17,6 @@ function SinglePost() {
       const data = await getSinglePost(id);
       setPost(data.post);
       setComments(data.comments);
-      console.log(data);
       setIsLoading(false);
     }
     getPost();
