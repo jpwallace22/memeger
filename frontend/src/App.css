@@ -4,3 +4,14 @@
   align-items: center;
   justify-content: space-around;
 }
+.single-post {
+  padding: 2rem 0;
+  max-width: 850px;
+  margin: 0 auto;
+}
+.single-post .post .card {
+  background-color: transparent;
+}
+.single-post h2 {
+  margin-bottom: 2rem;
+}

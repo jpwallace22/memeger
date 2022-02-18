@@ -14,6 +14,7 @@
 .post-user-info img {
   border-radius: 50%;
   margin-right: 0.5rem;
+  width: 35px;
 }
 .post-image {
   width: 100%;

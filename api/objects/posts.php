@@ -98,4 +98,29 @@ class Posts{
       
         return $stmt;
         }
+
+        /**
+     * RETRIEVE SINGLE POST COMMENTS
+     * 
+     * @param int $id -- post_id
+     */
+    function get_single_post_comments($id){
+        // select all query
+        $query = "  SELECT c.*, u.username AS commenter, u.profile_pic AS commenter_pic
+                    FROM comments AS c
+                        LEFT JOIN users as u
+                        ON c.user_id = u.user_id
+                    WHERE post_id = :id 
+                    AND is_approved = 1
+                    ORDER BY c.date ASC ";
+
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+        //bind variables
+        $stmt->bindValue('id', $id, PDO::PARAM_INT);
+        // execute query
+        $stmt->execute();
+      
+        return $stmt;
+        }
 }

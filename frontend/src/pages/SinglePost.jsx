@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import PostItem from "../components/PostItem";
-import { getSinglePost } from "../assets/functions/postFunctions";
+import { getSinglePost } from "../assets/functions/functions";
 import Navbar from "../components/Navbar";
+import Comment from "../components/Comment";
 
 function SinglePost() {
   const [post, setPost] = useState([]);
+  const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
 
   useEffect(() => {
     //fetch posts for today
     async function getPost() {
-      const post = await getSinglePost(id);
-      setPost(post);
+      const data = await getSinglePost(id);
+      setPost(data.post);
+      setComments(data.comments);
+      console.log(data);
       setIsLoading(false);
     }
     getPost();
@@ -23,13 +27,21 @@ function SinglePost() {
   return (
     <>
       <Navbar />
-      {isLoading ? (
-        "loading..."
-      ) : post.error ? (
-        <h2>{post.error}</h2>
-      ) : (
-        <PostItem post={post} />
-      )}
+      <div className="single-post">
+        {isLoading ? (
+          "loading..."
+        ) : post.error ? (
+          <h2>{post.error}</h2>
+        ) : (
+          <PostItem post={post} />
+        )}
+        <div className="card">
+          <h2>{post.comments_count} Comments</h2>
+          {comments.map((comment, index) => (
+            <Comment comment={comment} key={index} />
+          ))}
+        </div>
+      </div>
     </>
   );
 }

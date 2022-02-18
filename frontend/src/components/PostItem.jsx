@@ -11,12 +11,7 @@ function PostItem({ post }) {
     <div className="post card">
       <h3 className="post-title">{post.title}</h3>
       <div className="post-user-info">
-        <img
-          src={post.profile_pic}
-          alt={post.username}
-          width={30}
-          height={30}
-        />
+        <img src={post.profile_pic} alt={post.username} />
         <span>{post.username}</span>
       </div>
       <Link to={`/post/${post.post_id}`}>

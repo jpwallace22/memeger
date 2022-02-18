@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { getPosts } from "../assets/functions/postFunctions";
+import { getPosts } from "../assets/functions/functions";
 import PostItem from "../components/PostItem";
 import Navbar from "../components/Navbar";
 import SortDropdown from "../components/SortDropdown";
@@ -33,7 +33,6 @@ function Home() {
     if (order === "date") {
       order = "p.date";
     }
-    console.log(order);
     const posts = await getPosts(sortDate, 20, 0, order);
     setPosts(posts);
     setSortBy(order);
