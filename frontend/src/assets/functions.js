@@ -31,6 +31,28 @@ export const getSinglePost = async (id) => {
 };
 
 /**
+ * POST REQUEST TO API TO REGISTER NEW USER
+ * @param {string} username -- username from user input
+ * @param {string} email -- email from user input
+ * @param {string} password -- pw from user input
+ * @returns JSON data either {success}, {error}, or [{errors} for failed validation]
+ */
+export const registerNewUser = async (username, email, password) => {
+  const res = await fetch(
+    `/api/users/register.php?username=${username}&email=${email}&password=${password}`,
+    {
+      method: "POST",
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/ charset=UTF-8",
+      },
+    }
+  );
+  const data = await res.json();
+  return data;
+};
+
+/**
  * RETURNS HOW LONG AGO SINCE THE DATE IN A NICE STRING
  * ## https://coolaj86.com/articles/time-ago-in-under-50-lines-of-javascript/
  * (updated to add configuration from any date format)

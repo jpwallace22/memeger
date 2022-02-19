@@ -34,7 +34,7 @@ $valid = true;
 $errors= [];
 
 //VALIDATE DATA
-//username too long / short
+//username not too long / short
 if( strlen($username) > 30 || strlen( $username ) < 3){
     $valid = false;
     $errors['username'] = 'Username must be between 3 & 30 characters.';
@@ -47,7 +47,7 @@ if( strlen($username) > 30 || strlen( $username ) < 3){
         $errors['username'] = 'Bummer. That username is taken.';
     }
 }
-//password too short
+//password not too short
 if( strlen( $password ) < 8){
     $valid = false;
     $errors['password'] = 'Password must be at least 8 characters.';
@@ -57,7 +57,7 @@ if(! filter_var($email, FILTER_VALIDATE_EMAIL)){
     $valid = false;
     $errors['email'] = 'Please use a valid email';
 } else {
-    //email is unique
+    //check email is unique
     $stmt = $users->check_email($email);
     $num = $stmt->rowCount();
     if($num > 0){
@@ -66,59 +66,43 @@ if(! filter_var($email, FILTER_VALIDATE_EMAIL)){
     }
 }
 
+//IF ANYTHING IS NOT VALID RESPOND 500 AND SEND ERRORS AS JSON
 if(!$valid){
-      // set response code
       http_response_code(500);
       // show users data in json format
       echo json_encode(array('errors' => $errors));
       exit;
 }
 
+require '../config/randomAvatarsGenerator.php';
+// Instantiate randomAvatarsGenerator.
+$avatar = new randomAvatarsGenerator(); 
+// Generate a random preset.
+$avatar->generate(); 
+// Draw the image corresponding to the preset.
+$avatar->draw();
+// Save the image in the folder with the name 'avatar.png'.
+$avatar->saveImage('../../frontend/src/assets/images/avatars', "$username.png");
+//image filepath for query
+$image = "/frontend/src/assets/images/avatars/$username.png";
 
-
+//hash password
+$hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
 // query users
-$stmt = $users->read($id);
-$num = $stmt->rowCount();
-
+$stmt = $users->register($email, $username, $hashed_password, $image);
+$num = $stmt->rowCount(); 
 // check if more than 0 record found
 if($num>0){
-  
-    // define users array
-    $users_arr=array();
-  
-    // retrieve table contents
-    // fetch() is faster than fetchAll() @http://stackoverflow.com/questions/2770630/pdofetchall-vs-pdofetch-in-a-loop
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
-        // extract row this will make $row['name'] to just $name only
-        extract($row);
-  
-        //create array to convert to JSON
-        $users_arr=array(
-            "user_id" => $user_id,
-            "email" => $email,
-            "username" => $username,
-            "password" => $password,
-            "profile_pic" => $profile_pic,
-            "bio" => html_entity_decode($bio),
-            "is_admin" => $is_admin,
-            "join_date" => $join_date,
-        );
-    }
-  
-    // set response code
-    http_response_code(200);
-  
-    // show users data in json format
-    echo json_encode($users_arr);
+    http_response_code(201);
+    echo json_encode(["success" => "Success!"]);
+
 } else{
-  
-    // set response code - 404 Not found
+
     http_response_code(404);
-  
     // return error if not found
     echo json_encode(
-        array("error" => "Sorry, that user doesn't exist.")
+        array("error" => "Woah, we had a strange error. Try again later.")
     );
 }

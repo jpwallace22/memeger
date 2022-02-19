@@ -69,4 +69,22 @@ class Users{
     $stmt->execute(array( 'email' => $email ));
     return $stmt;
     }
+
+    /**
+     * ADD NEW USER TO THE DATABASE
+     */
+    function register($email, $username, $password, $image){
+    // select all query
+
+    $query = "INSERT INTO $this->table_name
+                ( email, username, password, profile_pic, bio, join_date, last_login, is_admin)
+                VALUES
+                (:email, :username, :password, :image,'', now(), now(), 0 )";
+   
+    // prepare query statement
+    $stmt = $this->conn->prepare($query);
+    // execute query
+    $stmt->execute(array( ':email' => $email, ':username' => $username, ':password' => $password, ':image' => $image ));
+    return $stmt;
+    }
 }

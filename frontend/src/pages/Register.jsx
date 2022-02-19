@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../styles/loginPage.css";
 import "../styles/register.css";
 import Button from "../components/Button";
+import { registerNewUser } from "../assets/functions";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactComponent as Logo } from "../assets/images/logo.svg";
 import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
@@ -18,18 +19,13 @@ function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await fetch(
-      `/api/users/register.php?username=${username}&email=${email}&password=${password}`,
-      {
-        method: "POST",
-        headers: {
-          Accept: "application/json, text/plain, */*",
-          "Content-Type": "application/ charset=UTF-8",
-        },
-      }
-    );
-    const data = await res.json();
-    setErrors(data.errors);
+    const data = await registerNewUser(username, email, password);
+    if (data.errors) {
+      setErrors(data.errors);
+    }
+    if (data.success) {
+      navigate("/login?register=1");
+    }
   };
 
   //TODO add front end validation to ease the server

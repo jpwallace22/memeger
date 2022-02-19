@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../styles/loginPage.css";
 import Button from "../components/Button";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { ReactComponent as Logo } from "../assets/images/logo.svg";
 import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
 import { ImEye, ImEyeBlocked } from "react-icons/im";
@@ -11,7 +11,10 @@ function Login() {
   const [password, setPassword] = useState("");
   const [seePassword, setSeePassword] = useState(false);
 
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+
+  const register = searchParams.get("register");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -29,6 +32,13 @@ function Login() {
           <Logo />
         </Link>
       </div>
+      {register && (
+        <div>
+          <h1 className="gold">Success!</h1>
+          <h2>You can log in now.</h2>
+        </div>
+      )}
+
       <form className="card" onSubmit={(e) => handleSubmit(e)}>
         <label htmlFor="username" className="sr-only">
           Username

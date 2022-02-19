@@ -13,6 +13,9 @@
 .input-error {
   border: 2px rgb(255, 75, 75) solid !important;
 }
+.gold {
+  color: var(--gold);
+}
 .sr-only:not(:focus):not(:active) {
   clip: rect(0 0 0 0);
   clip-path: inset(50%);
@@ -21,6 +24,10 @@
   position: absolute;
   white-space: nowrap;
   width: 1px;
+}
+.login h1,
+.login h2 {
+  text-align: center;
 }
 @media screen and (min-width: 720px) {
   .no-mobile {
