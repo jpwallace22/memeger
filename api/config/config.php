@@ -10,6 +10,7 @@
 
 
 define('DEBUG_MODE', true);
+session_start();
 
 
 

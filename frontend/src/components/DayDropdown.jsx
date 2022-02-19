@@ -1,10 +1,10 @@
 import React, { useState, useContext } from "react";
-import GlobalContext from "../context/GlobalContext";
+import PostContext from "../context/PostContext";
 import "../styles/dropdown.css";
 import { BsCaretRightFill } from "react-icons/bs";
 
 function SortDropdown({ handleSort }) {
-  const { setDate } = useContext(GlobalContext);
+  const { setDate } = useContext(PostContext);
   //TODO set sort display to global state
 
   const [todayActive, setTodayActive] = useState(true);

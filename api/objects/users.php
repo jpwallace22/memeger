@@ -24,7 +24,6 @@ class Users{
     // read products
     function read($id){
   
-    // select all query
     $query = "SELECT *
                 FROM $this->table_name 
                 WHERE user_id = $id";
@@ -40,7 +39,6 @@ class Users{
      * CHECKS IF USERNAME IS IN DATABASE
      */
     function check_username($username){
-    // select all query
     
     $query = "SELECT *
                 FROM $this->table_name
@@ -57,7 +55,6 @@ class Users{
      * CHECKS IF EMAIL IS IN DATABASE
      */
     function check_email($email){
-    // select all query
 
     $query = "SELECT *
                 FROM $this->table_name
@@ -74,7 +71,6 @@ class Users{
      * ADD NEW USER TO THE DATABASE
      */
     function register($email, $username, $password, $image){
-    // select all query
 
     $query = "INSERT INTO $this->table_name
                 ( email, username, password, profile_pic, bio, join_date, last_login, is_admin)
@@ -87,4 +83,36 @@ class Users{
     $stmt->execute(array( ':email' => $email, ':username' => $username, ':password' => $password, ':image' => $image ));
     return $stmt;
     }
+
+     /**
+     * GET ALL USER INFO BY USERNAME
+     */
+    function login($username){
+
+        $query = "SELECT *
+                    FROM $this->table_name 
+                    WHERE username = :username";
+      
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+        // execute query
+        $stmt->execute(['username' => $username]);
+        return $stmt;
+        }
+
+     /**
+     * UPDATE THE USERS LAST LOGIN TIME
+     */
+    function update_login_date($id){
+
+        $query = "UPDATE $this->table_name
+                    SET last_login = now()
+                    WHERE user_id = :id";
+      
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+        // execute query
+        $stmt->execute(['id' => $id]);
+        return $stmt;
+        }
 }

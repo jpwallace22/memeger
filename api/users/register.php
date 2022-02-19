@@ -27,14 +27,18 @@ $db = $database->getConnection();
 $users = new Users($db);
   
 //SANITIZE DATA
-$username = clean_string($_GET["username"]);
-$email = clean_email($_GET["email"]);
-$password = clean_string($_GET["password"]);
+$username = clean_string( strtolower( $_GET["username"] ) );
+$email = clean_email( $_GET["email"] );
+$password = clean_string( $_GET["password"] );
 $valid = true;
 $errors= [];
 
 //VALIDATE DATA
-//username not too long / short
+//username not too long / short / has weird characters
+if(!preg_match('/^[a-zA-Z0-9_]+$/', $username )){
+    $valid = false;
+    $errors['username'] = 'Can only contain letters, numbers, and underscores.';
+}
 if( strlen($username) > 30 || strlen( $username ) < 3){
     $valid = false;
     $errors['username'] = 'Username must be between 3 & 30 characters.';

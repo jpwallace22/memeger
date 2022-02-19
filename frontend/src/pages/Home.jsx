@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState, useContext } from "react";
-import GlobalContext from "../context/GlobalContext";
+import PostContext from "../context/PostContext";
 import { getPosts } from "../assets/functions";
 import PostItem from "../components/PostItem";
 import Navbar from "../components/Navbar";
@@ -8,10 +8,10 @@ import SortDropdown from "../components/SortDropdown";
 import DayDropdown from "../components/DayDropdown";
 
 function Home() {
-  //Global state
+  //Post state
   const {
     state: { date, sortBy },
-  } = useContext(GlobalContext);
+  } = useContext(PostContext);
 
   //Component State
   const [posts, setPosts] = useState([]);

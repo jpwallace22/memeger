@@ -1,6 +1,6 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import { GlobalProvider } from "./context/GlobalContext";
+import { PostProvider } from "./context/PostContext";
 import Home from "./pages/Home";
 import SinglePost from "./pages/SinglePost";
 import Login from "./pages/Login";
@@ -9,7 +9,7 @@ import Register from "./pages/Register";
 
 function App() {
   return (
-    <GlobalProvider>
+    <PostProvider>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/post/:id" element={<SinglePost />} />
@@ -17,7 +17,7 @@ function App() {
         <Route path="/register" element={<Register />} />
       </Routes>
       <Footer />
-    </GlobalProvider>
+    </PostProvider>
   );
 }
 
