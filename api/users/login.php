@@ -3,7 +3,8 @@ include '../config/config.php';
 include '../config/middleware.php';
 
 /**
- * COMPARES USERNAME AND PASSWORD AND SETS SESSION FOR LOGGED IN USER
+ * COMPARES USERNAME AND PASSWORD //TODO SETS SESSION FOR LOGGED IN USER
+ * AND RETURNS JSON OF ALL USER DATA
  * ::endpoint ==> api/users/login.php
  * 
  * @param username
