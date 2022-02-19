@@ -6,22 +6,15 @@ export const PostProvider = ({ children }) => {
   const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
   const [sortBy, setSortBy] = useState("p.date");
 
-  const state = {
+  //global state and functions for posts
+  const posts = {
     date,
     sortBy,
+    setDate,
+    setSortBy,
   };
 
-  return (
-    <PostContext.Provider
-      value={{
-        state,
-        setDate,
-        setSortBy,
-      }}
-    >
-      {children}
-    </PostContext.Provider>
-  );
+  return <PostContext.Provider value={posts}>{children}</PostContext.Provider>;
 };
 
 export default PostContext;

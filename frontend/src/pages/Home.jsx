@@ -9,9 +9,7 @@ import DayDropdown from "../components/DayDropdown";
 
 function Home() {
   //Post state
-  const {
-    state: { date, sortBy },
-  } = useContext(PostContext);
+  const { date, sortBy } = useContext(PostContext);
 
   //Component State
   const [posts, setPosts] = useState([]);

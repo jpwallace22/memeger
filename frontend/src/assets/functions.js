@@ -12,11 +12,15 @@ export const getPosts = async (
   offset = 0,
   order = "p.date"
 ) => {
-  const response = await fetch(
-    `/api/posts/date.php?date=${date}&limit=${limit}&offset=${offset}&order=${order}`
-  );
-  const posts = await response.json();
-  return posts;
+  try {
+    const response = await fetch(
+      `/api/posts/date.php?date=${date}&limit=${limit}&offset=${offset}&order=${order}`
+    );
+    const posts = await response.json();
+    return posts;
+  } catch (error) {
+    throw new Error(error);
+  }
 };
 
 /**
@@ -25,9 +29,13 @@ export const getPosts = async (
  * @returns - JSON data
  */
 export const getSinglePost = async (id) => {
-  const response = await fetch(`/api/posts/post.php?post_id=${id}`);
-  const post = await response.json();
-  return post;
+  try {
+    const response = await fetch(`/api/posts/post.php?post_id=${id}`);
+    const post = await response.json();
+    return post;
+  } catch (error) {
+    throw new Error(error);
+  }
 };
 
 /**
@@ -38,18 +46,22 @@ export const getSinglePost = async (id) => {
  * @returns JSON data either {success}, {error}, or [{errors} for failed validation]
  */
 export const registerNewUser = async (username, email, password) => {
-  const res = await fetch(
-    `/api/users/register.php?username=${username}&email=${email}&password=${password}`,
-    {
-      method: "POST",
-      headers: {
-        Accept: "application/json, text/plain, */*",
-        "Content-Type": "application/ charset=UTF-8",
-      },
-    }
-  );
-  const data = await res.json();
-  return data;
+  try {
+    const res = await fetch(
+      `/api/users/register.php?username=${username}&email=${email}&password=${password}`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json, text/plain, */*",
+          "Content-Type": "application/ charset=UTF-8",
+        },
+      }
+    );
+    const data = await res.json();
+    return data;
+  } catch (e) {
+    throw new Error(e);
+  }
 };
 
 /**
