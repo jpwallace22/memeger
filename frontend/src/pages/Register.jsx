@@ -1,22 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "../styles/loginPage.css";
 import "../styles/register.css";
+import PostContext from "../context/PostContext";
 import Button from "../components/Button";
-import { registerNewUser } from "../assets/functions";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactComponent as Logo } from "../assets/images/logo.svg";
 import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
 import { ImEye, ImEyeBlocked } from "react-icons/im";
 
 function Register() {
+  //global state
+  const { registerNewUser } = useContext(PostContext);
+
+  //form state
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [seePassword, setSeePassword] = useState(false);
   const [errors, setErrors] = useState({});
 
+  //hooks
   const navigate = useNavigate();
 
+  //on form submit, send data to register user API, redirect if success.
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = await registerNewUser(username, email, password);

@@ -26,9 +26,13 @@ $db = $database->getConnection();
 // initialize object
 $users = new Users($db);
   
+//extract JSON data
+$json = file_get_contents('php://input');
+$data = json_decode($json);
+
 //SANITIZE DATA
-$username = clean_string( strtolower( $_GET["username"] ) );
-$not_hashed_password = clean_string( $_GET["password"] );
+$username = clean_string( strtolower( $data->username ) );
+$not_hashed_password = clean_string( $data->password );
 $valid = true;
 $errors= [];
 
@@ -86,6 +90,11 @@ if($num>0){
         //update last login time
         $stmt = $users->update_login_date($user['user_id']);
         $num = $stmt->rowCount(); 
+
+        //set session
+        $_SESSION["logged_in"] = true;
+        $_SESSION["id"] = $user['user_id'];
+        $_SESSION["username"] = $user['username'];   
        
         //send response
         http_response_code(200);

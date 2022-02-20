@@ -1,7 +1,6 @@
 import React from "react";
 import { useEffect, useState, useContext } from "react";
 import PostContext from "../context/PostContext";
-import { getPosts } from "../assets/functions";
 import PostItem from "../components/PostItem";
 import Navbar from "../components/Navbar";
 import SortDropdown from "../components/SortDropdown";
@@ -9,7 +8,7 @@ import DayDropdown from "../components/DayDropdown";
 
 function Home() {
   //Post state
-  const { date, sortBy } = useContext(PostContext);
+  const { date, sortBy, getPosts } = useContext(PostContext);
 
   //Component State
   const [posts, setPosts] = useState([]);
@@ -25,7 +24,7 @@ function Home() {
     }
     getTodaysPosts();
     //will automatically rerun if the date or sortby options are changed
-  }, [date, sortBy]);
+  }, [date, sortBy, getPosts]);
 
   /**
    * Takes the data from the dropdown and updates the sorting states

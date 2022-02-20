@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import PostContext from "../context/PostContext";
 import { useParams } from "react-router-dom";
 import PostItem from "../components/PostItem";
-import { getSinglePost } from "../assets/functions";
 import Navbar from "../components/Navbar";
 import Comment from "../components/Comment";
 
 function SinglePost() {
+  const { getSinglePost } = useContext(PostContext);
+
   const [post, setPost] = useState([]);
   const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -20,7 +22,7 @@ function SinglePost() {
       setIsLoading(false);
     }
     getPost();
-  }, [id]);
+  }, [id, getSinglePost]);
 
   //todo add loading widget
   return (
