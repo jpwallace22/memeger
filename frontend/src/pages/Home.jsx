@@ -5,6 +5,7 @@ import PostItem from "../components/PostItem";
 import Navbar from "../components/Navbar";
 import SortDropdown from "../components/SortDropdown";
 import DayDropdown from "../components/DayDropdown";
+import Loader from "../components/Loader";
 
 function Home() {
   //Post state
@@ -12,7 +13,7 @@ function Home() {
 
   //Component State
   const [posts, setPosts] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     //fetch posts for today
@@ -46,7 +47,9 @@ function Home() {
         </div>
         <div className="post-list">
           {isLoading ? (
-            "loading..."
+            <div className="no-posts">
+              <Loader />
+            </div>
           ) : posts.error ? (
             <div className="no-posts">
               <h2>{posts.error}</h2>
