@@ -15,6 +15,8 @@ header("Content-Type: application/json; charset=UTF-8");
 // include database and object files
 include_once '../config/database.php';
 include_once '../objects/posts.php';
+
+
   
 // instantiate database and product object
 $database = new Database();
@@ -73,7 +75,7 @@ if($num>0){
   
     // set response code - 404 Not found
     http_response_code(404);
-  
+
     // return error if not found
     echo json_encode(
         array("error" => "Fresh out of posts.")

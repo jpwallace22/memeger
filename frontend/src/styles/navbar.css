@@ -19,6 +19,10 @@ header {
   margin-right: 0.5rem;
   cursor: pointer;
 }
+.user-button img {
+  width: 30px;
+  border-radius: 50%;
+}
 .user-button svg:hover {
   color: var(--pink);
   transform: scale(1.02);

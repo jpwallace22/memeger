@@ -33,6 +33,7 @@ function Login() {
     }
     if (data.user_id) {
       setUser(data);
+      sessionStorage.setItem("loggedUser", JSON.stringify(data));
       navigate("/");
     }
   };

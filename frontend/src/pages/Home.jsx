@@ -48,7 +48,10 @@ function Home() {
           {isLoading ? (
             "loading..."
           ) : posts.error ? (
-            <h2>{posts.error}</h2>
+            <div className="no-posts">
+              <h2>{posts.error}</h2>
+              <p>Why not get the ball rolling? Be the first!</p>
+            </div>
           ) : (
             posts.map((post, index) => <PostItem post={post} key={index} />)
           )}

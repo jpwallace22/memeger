@@ -74,17 +74,15 @@ if($num>0){
             "user_id" => $user_id,
             "email" => $email,
             "username" => $username,
-            "password" => $password,
             "profile_pic" => $profile_pic,
             "bio" => html_entity_decode($bio),
             "join_date" => $join_date,
             "last_login" => $last_login,
             "is_admin" => $is_admin,
         );
-        
+        //check if passwords match
+        $do_match = password_verify( $not_hashed_password, $password);
     }
-     //check if passwords match
-     $do_match = password_verify( $not_hashed_password, $user['password']);
     if( $do_match ){
         
         //update last login time
