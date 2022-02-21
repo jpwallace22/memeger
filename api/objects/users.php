@@ -21,17 +21,29 @@ class Users{
         $this->conn = $db;
     }
 
-    // read products
-    function read($id){
+    /**
+     * GET ALL USER INFO FOR PROFILE PAGE
+     */
+    function profile_page_info($username){
   
-    $query = "SELECT *
-                FROM $this->table_name 
-                WHERE user_id = $id";
+    $query =   "SELECT 
+                    u.user_id, u.email, u.username, u.profile_pic, u.bio, u.join_date, u.last_login, u.is_admin,
+                    COUNT(p.is_winner) AS win_count,
+                    COUNT(f.post_id) AS fav_count
+                FROM users AS u
+                    LEFT JOIN posts AS p
+                    ON u.user_id = p.user_id
+                    LEFT JOIN favorites AS f
+                    ON u.user_id = f.user_id
+                WHERE u.username = :username
+                GROUP BY u.user_id
+                LIMIT 1  
+                ";
   
     // prepare query statement
     $stmt = $this->conn->prepare($query);
     // execute query
-    $stmt->execute();
+    $stmt->execute(['username' => $username]);
     return $stmt;
     }
 

@@ -1,5 +1,5 @@
 <?php
-include '../config/middleware.php';
+include_once '../config/middleware.php';
 
 class Posts{
   
@@ -99,7 +99,7 @@ class Posts{
         return $stmt;
         }
 
-        /**
+    /**
      * RETRIEVE SINGLE POST COMMENTS
      * 
      * @param int $id -- post_id
@@ -113,6 +113,36 @@ class Posts{
                     WHERE post_id = :id 
                     AND is_approved = 1
                     ORDER BY c.date ASC ";
+
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+        //bind variables
+        $stmt->bindValue('id', $id, PDO::PARAM_INT);
+        // execute query
+        $stmt->execute();
+      
+        return $stmt;
+        }
+
+    /**
+     * GET ALL POSTS FOR A SINGLE USER
+     * 
+     * @param int $id -- post_id
+     */
+    function get_posts_by_user($id){
+        // select all query
+        $query = "  SELECT p.*, COUNT( DISTINCT c.comment_id) AS comments_count, u.username, u.profile_pic, COUNT( DISTINCT v.user_id) AS votes
+                    FROM posts AS p
+                        LEFT JOIN comments AS c
+                        ON p.post_id = c.post_id
+                        LEFT JOIN users AS u
+                        ON p.user_id = u.user_id
+                        LEFT JOIN votes AS v
+                        ON p.post_id = v.post_id
+                    WHERE p.user_id = :id
+                        AND p.is_published = 1
+                    GROUP BY p.post_id
+                    ORDER BY p.date DESC";
 
         // prepare query statement
         $stmt = $this->conn->prepare($query);

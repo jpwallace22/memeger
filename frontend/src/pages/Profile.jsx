@@ -1,4 +1,5 @@
 import React, { useState, useContext, useRef, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import UserContext from "../context/UserContext";
 import Navbar from "../components/Navbar";
 import "../styles/profile.css";
@@ -6,18 +7,27 @@ import Button from "../components/Button";
 import { FaEdit } from "react-icons/fa";
 
 function Profile() {
+  //global state
   const { user } = useContext(UserContext);
 
-  const [username, setUsername] = useState(`${user.username}`);
+  //local state
+  const [formUsername, setFormUsername] = useState(`${user.username}`);
   const [bio, setBio] = useState(`${user.bio}`);
   const [editName, setEditName] = useState(false);
   const [editBio, setEditBio] = useState(false);
 
+  //hooks
+  const { username } = useParams();
+
+  //close all edit fields
   const handleCancel = (e) => {
     e.preventDefault();
     setEditBio(false);
     setEditName(false);
   };
+
+  //returns bool to check if current page belongs to logged user
+  const isOwnPage = user.username === username;
 
   return (
     <>
@@ -36,17 +46,19 @@ function Profile() {
                   name="username"
                   id="username"
                   className="edit-username cap"
-                  value={username}
-                  onChange={({ target }) => setUsername(target.value)}
+                  value={formUsername}
+                  onChange={({ target }) => setFormUsername(target.value)}
                   autoFocus
                 />
               </div>
             ) : (
               <div>
                 <h2 className="profile-username cap">{user.username} </h2>
-                <span className="edit" onClick={() => setEditName(true)}>
-                  <FaEdit />
-                </span>{" "}
+                {isOwnPage && (
+                  <span className="edit" onClick={() => setEditName(true)}>
+                    <FaEdit />
+                  </span>
+                )}
               </div>
             )}
 
@@ -69,9 +81,11 @@ function Profile() {
             ) : (
               <div>
                 <p className="bio">{user.bio} </p>
-                <span className="edit" onClick={() => setEditBio(true)}>
-                  <FaEdit />
-                </span>
+                {isOwnPage && (
+                  <span className="edit" onClick={() => setEditBio(true)}>
+                    <FaEdit />
+                  </span>
+                )}
               </div>
             )}
 
