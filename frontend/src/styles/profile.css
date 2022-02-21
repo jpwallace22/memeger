@@ -1,0 +1,77 @@
+.p-info {
+  margin: 2rem auto 1rem;
+  text-align: center;
+  padding: 1rem;
+}
+.edit-username,
+.edit-bio {
+  display: block;
+  margin: 1rem auto;
+  background-color: transparent;
+  font-family: var(--font-stack);
+  border: none;
+  max-width: 400px;
+  width: 100%;
+}
+.edit-username:focus {
+  outline: none;
+}
+.p-info img {
+  max-width: 200px;
+  border-radius: 50%;
+}
+h2.profile-username {
+  margin: 1rem 2rem;
+  display: inline-block;
+}
+p.bio {
+  max-width: 400px;
+  width: 100%;
+  text-align: left;
+  margin: 0 auto 1rem;
+}
+.edit {
+  color: var(--light-grey);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.edit:hover {
+  color: var(--gold);
+}
+.edit-username {
+  font-size: 1.5rem;
+  text-align: center;
+  width: 100%;
+  max-width: 400px;
+  color: var(--white);
+  font-weight: 600;
+  border-bottom: 2px solid var(--white);
+}
+.edit-bio {
+  color: var(--light-grey);
+  font-size: 1rem;
+  line-height: 1.5;
+  border: 2px solid var(--white);
+  padding: 1rem;
+}
+.stats {
+  max-width: 400px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin: 2rem auto 1rem;
+  font-size: 1.25rem;
+}
+.profile-buttons {
+  padding: 1rem;
+}
+.profile-buttons button {
+  margin: 1rem auto;
+}
+.profile .save {
+  min-width: 93px;
+}
+.cancel {
+  text-decoration: underline;
+  cursor: pointer;
+}

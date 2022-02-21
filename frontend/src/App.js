@@ -7,6 +7,7 @@ import SinglePost from "./pages/SinglePost";
 import Login from "./pages/Login";
 import Footer from "./components/Footer";
 import Register from "./pages/Register";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/post/:id" element={<SinglePost />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/profile/:username" element={<Profile />} />
         </Routes>
         <Footer />
       </PostProvider>

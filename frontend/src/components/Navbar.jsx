@@ -8,7 +8,7 @@ import Button from "./Button";
 import { Link } from "react-router-dom";
 
 function Navbar() {
-  const { user, setUser } = useContext(UserContext);
+  const { user, setUser, userLogout } = useContext(UserContext);
 
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -18,6 +18,13 @@ function Navbar() {
     if (userButton.current && !userButton.current.contains(e.target)) {
       setMenuOpen(false);
     }
+  };
+
+  const handleLogout = () => {
+    //TODO kill session on backend
+    userLogout();
+    sessionStorage.removeItem("loggedUser");
+    setUser({});
   };
 
   useEffect(() => {
@@ -47,13 +54,12 @@ function Navbar() {
         <Link to="/" className="header-logo">
           <Logo />
         </Link>
-        {/* <Link to="/login"> */}
         <div
           className="user-button"
           onClick={() => setMenuOpen(!menuOpen)}
           ref={userButton}
         >
-          {user.profile_pic ? (
+          {user.username ? (
             <>
               <span className="no-mobile mr-1 cap username">
                 {user.username}{" "}
@@ -79,18 +85,19 @@ function Navbar() {
                   ></path>
                 </svg>
                 <li>
-                  <Link to="/profile">Profile</Link>
+                  <Link to={`/profile/${user.username}`}>Profile</Link>
                 </li>
                 <li>
-                  <span>Logout</span>
+                  <span onClick={handleLogout}>Logout</span>
                 </li>
               </ul>
             </>
           ) : (
-            <FaUser size={24} />
+            <Link to="/login">
+              <FaUser size={24} />
+            </Link>
           )}
         </div>
-        {/* </Link> */}
       </nav>
     </header>
   );

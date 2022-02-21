@@ -7,4 +7,6 @@
   --pink: #b33c85;
   --white: #fff;
   --black: #000;
+  --font-stack: "Poppins", sans-serif, "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 }

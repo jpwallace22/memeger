@@ -36,10 +36,14 @@ header {
 }
 .user-button li {
   position: relative;
-  padding: 1rem;
   z-index: 10;
   background-color: var(--darkest-grey);
   border-radius: 8px;
+}
+.user-button li a,
+.user-button li span {
+  padding: 1.2rem 2rem;
+  display: block;
 }
 .user-button li:hover {
   filter: brightness(1.2);
@@ -51,7 +55,8 @@ header {
 .username {
   font-weight: 600;
 }
-.username:hover {
+.username:hover,
+.user-button:hover svg {
   color: var(--pink);
 }
 .user-button .dropdown-menu.menu-active {

@@ -10,6 +10,7 @@ export const UserProvider = ({ children }) => {
     user,
     setUser,
     userLogin,
+    userLogout,
   };
 
   //---------FUNCTIONS------------//
@@ -24,6 +25,19 @@ export const UserProvider = ({ children }) => {
       return userInfo;
     } catch (error) {
       throw new Error(error);
+    }
+  }
+
+  async function userLogout() {
+    try {
+      const res = await fetch("/api/users/logout.php");
+      const data = await res.json();
+      if (data) {
+        console.warn("session killed");
+      }
+      data && console.log("test");
+    } catch (e) {
+      throw new Error(e);
     }
   }
 
