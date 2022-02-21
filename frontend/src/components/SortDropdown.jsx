@@ -1,15 +1,24 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import PostContext from "../context/PostContext";
 import "../styles/dropdown.css";
 import { BsCaretRightFill } from "react-icons/bs";
 
 function SortDropdown({ handleSort }) {
-  const { setSortBy } = useContext(PostContext);
-  //TODO set sort display to global state
+  //global state
+  const { sortBy, setSortBy } = useContext(PostContext);
 
-  const [voteActive, setVoteActive] = useState(false);
-  const [newestActive, setNewestActive] = useState(true);
+  //local state
   const [menuOpen, setMenuOpen] = useState(false);
+
+  //hooks
+  const ref = useRef();
+
+  //closes menu if clicked outside of it
+  const handleClickOutside = (e) => {
+    if (ref.current && !ref.current.contains(e.target)) {
+      setMenuOpen(false);
+    }
+  };
 
   /**
    * Fetches and sorts data based on target
@@ -18,35 +27,32 @@ function SortDropdown({ handleSort }) {
    */
   const handleClick = (target) => {
     let data = target.dataset.value;
-    if (data === "votes") {
-      setNewestActive(false);
-      setVoteActive(true);
-    }
-    if (data === "date") {
-      setNewestActive(true);
-      setVoteActive(false);
-      data = "p.date";
-    }
     setMenuOpen(false);
     setSortBy(data);
   };
 
-  // toggles the dropdown menu open or closed
-  const handleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
+  useEffect(() => {
+    //if the menu is open user clicks outside of it, close the menu
+    if (!menuOpen) {
+      return;
+    }
+    window.addEventListener("click", (e) => handleClickOutside(e), true);
+
+    //cleanup
+    return () =>
+      window.removeEventListener("click", (e) => handleClickOutside(e), true);
+  }, [menuOpen]);
 
   return (
     <div
+      ref={ref}
       className={
         menuOpen ? "dropdown sort-dropdown active" : "dropdown sort-dropdown"
       }
     >
-      <div className="dropdown-title" onClick={handleMenu}>
+      <div className="dropdown-title" onClick={() => setMenuOpen(!menuOpen)}>
         <span>
-          {/* makes the title whatever element is currently selected */}
-          {document.querySelector(".dropdown-option.is-active") &&
-            document.querySelector(".dropdown-option.is-active").innerHTML}
+          {sortBy === "votes" ? "Most Votes" : "Newest Posts"}
           <BsCaretRightFill size={15} className="dropdown-caret" />
         </span>
       </div>
@@ -68,19 +74,15 @@ function SortDropdown({ handleSort }) {
         </svg>
         <ul className="dropdown-list">
           <li
-            className={
-              voteActive ? "dropdown-option is-active" : "dropdown-option"
-            }
+            className="dropdown-option"
             data-value="votes"
             onClick={({ target }) => handleClick(target)}
           >
             Most Votes
           </li>
           <li
-            className={
-              newestActive ? "dropdown-option is-active" : "dropdown-option"
-            }
-            data-value="date"
+            className="dropdown-option"
+            data-value="p.date"
             onClick={({ target }) => handleClick(target)}
           >
             Newest Posts

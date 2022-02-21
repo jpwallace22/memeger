@@ -1,9 +1,9 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import PostContext from "../context/PostContext";
 import "../styles/dropdown.css";
 import { BsCaretRightFill } from "react-icons/bs";
 
-function SortDropdown({ handleSort }) {
+function DayDropdown({ handleSort }) {
   const { setDate } = useContext(PostContext);
   //TODO set sort display to global state
 
@@ -12,6 +12,9 @@ function SortDropdown({ handleSort }) {
   const [monthActive, setMonthActive] = useState(false);
   const [allTimeActive, setAllTimeActive] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  //hooks
+  const ref = useRef();
 
   //sets all states to false
   const allStateFalse = () => {
@@ -27,6 +30,14 @@ function SortDropdown({ handleSort }) {
       .toISOString()
       .split("T")[0];
   };
+
+  //closes menu if clicked outside of it
+  const handleClickOutside = (e) => {
+    if (ref.current && !ref.current.contains(e.target)) {
+      setMenuOpen(false);
+    }
+  };
+
   /**
    * Fetches and sorts data based on target
    * [also closes the dropdown menu and sets the title based on target]
@@ -62,18 +73,27 @@ function SortDropdown({ handleSort }) {
     setDate(data);
   };
 
-  // toggles the dropdown menu open or closed
-  const handleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
+  useEffect(() => {
+    //if the menu is open user clicks outside of it, close the menu
+    if (!menuOpen) {
+      return;
+    }
+    //close menu if clicked off of it
+    window.addEventListener("click", (e) => handleClickOutside(e), true);
+
+    //cleanup
+    return () =>
+      window.removeEventListener("click", (e) => handleClickOutside(e), true);
+  }, [menuOpen]);
 
   return (
     <div
+      ref={ref}
       className={
         menuOpen ? "dropdown day-dropdown active" : "dropdown day-dropdown"
       }
     >
-      <div className="dropdown-title" onClick={handleMenu}>
+      <div className="dropdown-title" onClick={() => setMenuOpen(!menuOpen)}>
         <span>
           {/* makes the title whatever element is currently selected */}
           {document.querySelector(".dropdown-option.active") &&
@@ -140,4 +160,4 @@ function SortDropdown({ handleSort }) {
   );
 }
 
-export default SortDropdown;
+export default DayDropdown;

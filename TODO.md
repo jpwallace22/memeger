@@ -4,7 +4,7 @@
 - ~~create a loading spinner object~~
 - ~~check session information~~
 - ~~add user context to navbar~~
-- add user button dropdown on navbar
+- ~~add user button dropdown on navbar~~
 - logout button
 - create user profile page
 - create add comment form and function
