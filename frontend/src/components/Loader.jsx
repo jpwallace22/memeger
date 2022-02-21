@@ -1,17 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/loader.css";
 
 function Loader() {
   const [tooLong, setTooLong] = useState(false);
   const [thing, setThing] = useState(false);
 
-  setTimeout(() => {
-    setTooLong(true);
-  }, 6000);
+  useEffect(() => {
+    const tooLongTimer = setTimeout(() => {
+      setTooLong(true);
+    }, 6000);
 
-  setTimeout(() => {
-    setThing(true);
-  }, 26000);
+    const thingTimer = setTimeout(() => {
+      setThing(true);
+    }, 26000);
+
+    return () => {
+      clearTimeout(tooLongTimer);
+      clearTimeout(thingTimer);
+    };
+  }, []);
 
   return thing ? (
     <div>

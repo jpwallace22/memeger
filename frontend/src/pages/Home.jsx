@@ -27,23 +27,13 @@ function Home() {
     //will automatically rerun if the date or sortby options are changed
   }, [date, sortBy, getPosts]);
 
-  /**
-   * Takes the data from the dropdown and updates the sorting states
-   * @param {string} sortDate - 0000-00-00 00:00:00 - default is current date state
-   * @param {string} order - either 'votes' or 'p.date' - default is current sortBy state
-   */
-  const handleSort = async (sortDate = date, order = sortBy) => {
-    // setDate(sortDate);
-  };
-
-  //todo add loading widget
   return (
     <>
       <Navbar />
       <main>
         <div className="homepage-ui">
           <SortDropdown />
-          <DayDropdown handleSort={handleSort} />
+          <DayDropdown />
         </div>
         <div className="post-list">
           {isLoading ? (

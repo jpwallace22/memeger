@@ -1,11 +1,14 @@
 # TODO
 
-- remove password from get user info query
+- ~~remove password from get user info query~~
+- ~~create a loading spinner object~~
+- ~~check session information~~
+- ~~add user context to navbar~~
+- add user button dropdown on navbar
 - logout button
-- create a loading spinner object
-- add timeAgo() function to be friendly for the number 1
+- create user profile page
+- create add comment form and function
+- close sorting dropdown when click anywhere
 - add sorting dropdown global state sets
 - refactor backend to accept JSON
-- check session information
-- add user context to navbar add html for user
-- add user button dropdown on navbar
+- add timeAgo() function to be friendly for the number 1
