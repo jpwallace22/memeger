@@ -28,8 +28,8 @@ class Users{
   
     $query =   "SELECT 
                     u.user_id, u.email, u.username, u.profile_pic, u.bio, u.join_date, u.last_login, u.is_admin,
-                    COUNT(p.is_winner) AS win_count,
-                    COUNT(f.post_id) AS fav_count
+                    COUNT(DISTINCT p.is_winner) AS win_count,
+                    COUNT(DISTINCT f.post_id) AS fav_count
                 FROM users AS u
                     LEFT JOIN posts AS p
                     ON u.user_id = p.user_id

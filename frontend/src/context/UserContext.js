@@ -11,6 +11,7 @@ export const UserProvider = ({ children }) => {
     setUser,
     userLogin,
     userLogout,
+    getProfileInfo,
   };
 
   //---------FUNCTIONS------------//
@@ -32,10 +33,20 @@ export const UserProvider = ({ children }) => {
     try {
       const res = await fetch("/api/users/logout.php");
       const data = await res.json();
-      if (data) {
-        console.warn("session killed");
-      }
-      data && console.log("test");
+      data && console.warn("Session killed");
+    } catch (e) {
+      throw new Error(e);
+    }
+  }
+
+  async function getProfileInfo(JSONusername) {
+    try {
+      const res = await fetch("/api/users/user.php", {
+        method: "POST",
+        body: JSON.stringify(JSONusername),
+      });
+      const data = await res.json();
+      return data;
     } catch (e) {
       throw new Error(e);
     }

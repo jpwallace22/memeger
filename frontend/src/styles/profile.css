@@ -1,7 +1,9 @@
 .p-info {
   margin: 2rem auto 1rem;
   text-align: center;
-  padding: 1rem;
+  padding: 2rem 1rem;
+  border-bottom: 3px solid var(--pink);
+  max-width: 700px;
 }
 .edit-username,
 .edit-bio {
@@ -74,4 +76,10 @@ p.bio {
 .cancel {
   text-decoration: underline;
   cursor: pointer;
+}
+.user-posts h2 {
+  text-align: center;
+  padding: 2rem 0;
+  /* border-top: 1px solid var(--light-grey); */
+  font-size: 2rem;
 }

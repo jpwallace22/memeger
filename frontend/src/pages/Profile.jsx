@@ -5,14 +5,16 @@ import Navbar from "../components/Navbar";
 import "../styles/profile.css";
 import Button from "../components/Button";
 import { FaEdit } from "react-icons/fa";
+import PostItem from "../components/PostItem";
 
 function Profile() {
   //global state
-  const { user } = useContext(UserContext);
+  const { user: loggedUser, getProfileInfo } = useContext(UserContext);
 
   //local state
-  const [formUsername, setFormUsername] = useState(`${user.username}`);
-  const [bio, setBio] = useState(`${user.bio}`);
+  const [user, setUser] = useState({});
+  const [formUsername, setFormUsername] = useState(`${loggedUser.username}`);
+  const [bio, setBio] = useState(`${loggedUser.bio}`);
   const [editName, setEditName] = useState(false);
   const [editBio, setEditBio] = useState(false);
 
@@ -26,8 +28,16 @@ function Profile() {
     setEditName(false);
   };
 
+  useEffect(() => {
+    async function fetchData() {
+      const data = await getProfileInfo({ username });
+      setUser(data);
+    }
+    fetchData();
+  }, [getProfileInfo, username]);
+
   //returns bool to check if current page belongs to logged user
-  const isOwnPage = user.username === username;
+  const isOwnPage = loggedUser.username === username;
 
   return (
     <>
@@ -90,9 +100,9 @@ function Profile() {
             )}
 
             <div className="stats">
-              <span>Wins: 0</span>
-              <span>Posts: 0</span>
-              <span>Favorites: 0</span>
+              <span>Wins: {user.win_count}</span>
+              <span>Posts: {user.posts && user.posts.length}</span>
+              <span>Favorites: {user.fav_count}</span>
             </div>
 
             {(editName || editBio) && (
@@ -106,6 +116,17 @@ function Profile() {
               </div>
             )}
           </form>
+        </div>
+
+        <div className="user-posts">
+          <h2>{isOwnPage ? "Your Posts" : `${user.username}'s Posts`}</h2>
+          {user.posts ? (
+            user.posts.map((post, index) => (
+              <PostItem post={post} key={index} />
+            ))
+          ) : (
+            <h2>You haven't made any posts yet</h2>
+          )}
         </div>
       </main>
     </>
