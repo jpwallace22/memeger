@@ -30,6 +30,7 @@ function Navbar() {
     userLogout();
     localStorage.removeItem("loggedUser");
     setUser({});
+    navigate("/");
   };
 
   useEffect(() => {

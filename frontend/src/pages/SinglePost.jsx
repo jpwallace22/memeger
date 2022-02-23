@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import PostContext from "../context/PostContext";
 import UserContext from "../context/UserContext";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import PostItem from "../components/PostItem";
 import Navbar from "../components/Navbar";
 import Comment from "../components/Comment";
