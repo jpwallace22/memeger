@@ -3,14 +3,14 @@ include '../config/config.php';
 include '../config/middleware.php';
 
 /**
- * COMPARES USERNAME AND PASSWORD //TODO SETS SESSION FOR LOGGED IN USER
+ * COMPARES USERNAME AND PASSWORD 
  * AND RETURNS JSON OF ALL USER DATA
  * ::endpoint ==> api/users/login.php
  * 
  * @param username
  * @param password
  */
-
+ 
 // required headers
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -40,16 +40,16 @@ $errors= [];
 //username not too long / short / has weird characters
 if(!preg_match('/^[a-zA-Z0-9_]+$/', $username )){
     $valid = false;
-    $errors['username'] = 'Can only contain letters, numbers, and underscores.';
+    $errors['username'] = 'Username or password are incorrect';
 }
 if( strlen($username) > 30 || strlen( $username ) < 3){
     $valid = false;
-    $errors['username'] = 'Username must be between 3 & 30 characters.';
+    $errors['username'] = 'Username or password are incorrect';
 } 
 //password not too short
 if( strlen( $not_hashed_password ) < 8){
     $valid = false;
-    $errors['password'] = 'Password must be at least 8 characters.';
+    $errors['password'] = 'Username or password are incorrect';
 }
 
 //IF ANYTHING IS NOT VALID RESPOND 500 AND SEND ERRORS AS JSON
@@ -85,24 +85,32 @@ if($num>0){
     }
     if( $do_match ){
         
-        //update last login time
-        $stmt = $users->update_login_date($user['user_id']);
-        $num = $stmt->rowCount(); 
-
-        //set session
-        $_SESSION["logged_in"] = true;
-        $_SESSION["id"] = $user['user_id'];
-        $_SESSION["username"] = $user['username'];   
-       
+        //create access token and set session
+        $access_token = bin2hex( random_bytes( 30 ) );
+        
+        setcookie( 'access_token', $access_token, time() + 60 * 60 * 24 * 7);
+        $_SESSION["access_token"] = $access_token;
+        
+        setcookie( 'user_id', $user['user_id'], time() + 60 * 60 * 24 * 7);
+        $_SESSION["user_id"] = $user['user_id'];
+        
+        //update last login time and token
+        $stmt = $users->update_login($user['user_id'], $access_token);
+        
         //send response
         http_response_code(200);
         echo json_encode($user);
+    } else {
+        http_response_code(500);
+        
+      // show users data in json format
+      $errors['incorrect'] = 'Username or password are incorrect.';
+      echo json_encode(array('errors' => $errors));
     }
 } else{
 
-    http_response_code(404);
-    // return error if not found
-    echo json_encode(
-        array("error" => "Sorry, that username and/or password are incorrect.")
-    );
+    http_response_code(500);
+      // show users data in json format
+      $errors['incorrect'] = 'Username or password are incorrect.';
+      echo json_encode(array('errors' => $errors));
 }

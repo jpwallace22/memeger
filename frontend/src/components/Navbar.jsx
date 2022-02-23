@@ -5,34 +5,34 @@ import { GoDiffAdded } from "react-icons/go";
 import { FaUser } from "react-icons/fa";
 import { ReactComponent as Logo } from "../assets/images/logo.svg";
 import Button from "./Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Navbar() {
+  //global state
   const { user, setUser, userLogout } = useContext(UserContext);
 
+  //local state
   const [menuOpen, setMenuOpen] = useState(false);
 
+  //hooks
   const userButton = useRef();
+  const navigate = useNavigate();
 
+  //closes profile menu if you click out of it
   const handleClickOutside = (e) => {
     if (userButton.current && !userButton.current.contains(e.target)) {
       setMenuOpen(false);
     }
   };
 
+  //kills backend session, empty session storage, empty user state
   const handleLogout = () => {
-    //TODO kill session on backend
     userLogout();
-    sessionStorage.removeItem("loggedUser");
+    localStorage.removeItem("loggedUser");
     setUser({});
   };
 
   useEffect(() => {
-    //if no user info in state and there is in session storage, load user info into state.
-    if (!user.user_id && sessionStorage.getItem("loggedUser") != null) {
-      setUser(JSON.parse(sessionStorage.getItem("loggedUser")));
-    }
-
     if (!menuOpen) {
       return;
     }

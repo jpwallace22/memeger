@@ -28,12 +28,10 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = await userLogin({ username, password });
-    if (data.errors) {
-      setErrors(data.errors);
-    }
+    data.errors && setErrors(data.errors);
     if (data.user_id) {
       setUser(data);
-      sessionStorage.setItem("loggedUser", JSON.stringify(data));
+      localStorage.setItem("loggedUser", JSON.stringify(data));
       navigate("/");
     }
   };
@@ -57,6 +55,7 @@ function Login() {
       )}
 
       <form className="card" onSubmit={(e) => handleSubmit(e)}>
+        <span className="error">{errors.incorrect && errors.incorrect}</span>
         <label htmlFor="username" className="sr-only">
           Username
         </label>

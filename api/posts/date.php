@@ -1,5 +1,6 @@
 <?php
 include '../config/config.php';
+include '../config/middleware.php';
 
 /**
  * FETCHES ALL POSTS
@@ -26,10 +27,10 @@ $db = $database->getConnection();
 $posts = new Posts($db);
   
 // query posts
-$date = trim( strip_tags( $_GET["date"] ) );
-$limit = trim( strip_tags( $_GET["limit"] ) );
-$offset = trim( strip_tags( $_GET["offset"] ) );
-$order = $_GET["order"];
+$date = clean_string( $_GET["date"] );
+$limit = clean_int( $_GET["limit"] );
+$offset = clean_int( $_GET["offset"] );
+$order = clean_string($_GET["order"]);
 $stmt = $posts->get_posts($date, $limit, $offset, $order);
 $num = $stmt->rowCount();
 

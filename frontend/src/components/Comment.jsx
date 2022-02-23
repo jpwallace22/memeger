@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "../styles/comment.css";
 
 function Comment({ comment }) {
@@ -7,12 +8,18 @@ function Comment({ comment }) {
       <div className="comment">
         <div className="commenter-info">
           <div className="commenter">
-            <img
-              className="commenter-pic"
-              src={comment.profile_pic}
-              alt={comment.username}
-            />
-            <span className="commenter-name">{comment.username}</span>•
+            <Link to={`/profile/${comment.username}`}>
+              {" "}
+              <img
+                className="commenter-pic"
+                src={comment.profile_pic}
+                alt={comment.username}
+              />
+            </Link>
+            <Link to={`/profile/${comment.username}`}>
+              <span className="commenter-name cap">{comment.username}</span>
+            </Link>
+            •
           </div>
           <span className="comment-time"> {timeAgo(comment.date)}</span>
         </div>

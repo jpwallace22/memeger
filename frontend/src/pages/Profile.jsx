@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import UserContext from "../context/UserContext";
 import Navbar from "../components/Navbar";
@@ -90,7 +90,11 @@ function Profile() {
               </div>
             ) : (
               <div>
-                <p className="bio">{user.bio} </p>
+                <p className="bio">
+                  {!user.bio && isOwnPage
+                    ? "Write a little bio. Tell the world about yourself and why you're rad."
+                    : user.bio}{" "}
+                </p>
                 {isOwnPage && (
                   <span className="edit" onClick={() => setEditBio(true)}>
                     <FaEdit />
@@ -119,7 +123,9 @@ function Profile() {
         </div>
 
         <div className="user-posts">
-          <h2>{isOwnPage ? "Your Posts" : `${user.username}'s Posts`}</h2>
+          <h2 className="cap">
+            {isOwnPage ? "Your Posts" : `${user.username}'s Posts`}
+          </h2>
           {user.posts ? (
             user.posts.map((post, index) => (
               <PostItem post={post} key={index} />

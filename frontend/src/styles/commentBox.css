@@ -1,0 +1,29 @@
+.comment-box {
+  margin-top: 2rem;
+}
+.comment-user {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  color: var(--gold);
+}
+.comment-user img {
+  width: 30px;
+  border-radius: 50%;
+}
+.comment-box textarea {
+  width: 100%;
+  border: 1px solid var(--light-grey);
+  color: var(--light-grey);
+  font-size: 1rem;
+  line-height: 1.5;
+  padding: 1rem;
+  background-color: transparent;
+  font-family: var(--font-stack);
+}
+.comment-box button {
+  min-width: 150px;
+}
+.not-logged {
+  margin-top: 2rem;
+}

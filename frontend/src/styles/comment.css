@@ -10,6 +10,7 @@
 .commenter {
   display: flex;
   align-items: center;
+  color: var(--gold);
 }
 .commenter-info img {
   border-radius: 50%;

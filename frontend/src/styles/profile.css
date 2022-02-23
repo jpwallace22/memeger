@@ -2,7 +2,7 @@
   margin: 2rem auto 1rem;
   text-align: center;
   padding: 2rem 1rem;
-  border-bottom: 3px solid var(--pink);
+  border-bottom: 3px solid var(--gold);
   max-width: 700px;
 }
 .edit-username,
@@ -77,9 +77,20 @@ p.bio {
   text-decoration: underline;
   cursor: pointer;
 }
+.user-posts {
+  display: flex;
+  flex-wrap: wrap;
+}
+.user-posts .post {
+  min-width: 340px;
+  max-width: 500px;
+}
+.user-posts .post h3 {
+  font-size: 1.5rem;
+}
 .user-posts h2 {
+  width: 100%;
   text-align: center;
   padding: 2rem 0;
-  /* border-top: 1px solid var(--light-grey); */
   font-size: 2rem;
 }

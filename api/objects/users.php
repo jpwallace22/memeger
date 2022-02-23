@@ -27,7 +27,7 @@ class Users{
     function profile_page_info($username){
   
     $query =   "SELECT 
-                    u.user_id, u.email, u.username, u.profile_pic, u.bio, u.join_date, u.last_login, u.is_admin,
+                    u.user_id, u.email, u.username, u.profile_pic, u.bio, u.join_date, u.last_login, u.is_admin, u.access_token,
                     COUNT(DISTINCT p.is_winner) AS win_count,
                     COUNT(DISTINCT f.post_id) AS fav_count
                 FROM users AS u
@@ -52,7 +52,7 @@ class Users{
      */
     function check_username($username){
     
-    $query = "SELECT *
+    $query = "SELECT user_id
                 FROM $this->table_name
                 WHERE username = :username ";
   
@@ -68,7 +68,7 @@ class Users{
      */
     function check_email($email){
 
-    $query = "SELECT *
+    $query = "SELECT user_id
                 FROM $this->table_name
                 WHERE email = :email ";
   
@@ -80,14 +80,30 @@ class Users{
     }
 
     /**
+     * CHECKS IF THE USER IS LOGGED IN BY ACCESS TOKEN
+     */
+    function check_if_logged($token){
+
+    $query = "SELECT * FROM users
+                WHERE user_id = :id
+                AND access_token = :token";
+  
+    // prepare query statement
+    $stmt = $this->conn->prepare($query);
+    // execute query
+    $stmt->execute(array( 'token' => $token ));
+    return $stmt;
+    }
+
+    /**
      * ADD NEW USER TO THE DATABASE
      */
     function register($email, $username, $password, $image){
 
     $query = "INSERT INTO $this->table_name
-                ( email, username, password, profile_pic, bio, join_date, last_login, is_admin)
+                ( email, username, password, profile_pic, bio, join_date, last_login, is_admin, access_token)
                 VALUES
-                (:email, :username, :password, :image,'', now(), now(), 0 )";
+                (:email, :username, :password, :image,'', now(), now(), 0, '' )";
    
     // prepare query statement
     $stmt = $this->conn->prepare($query);
@@ -113,12 +129,28 @@ class Users{
         }
 
      /**
-     * UPDATE THE USERS LAST LOGIN TIME
+     * UPDATE THE USERS LAST LOGIN TIME and create access token
      */
-    function update_login_date($id){
+    function update_login($id, $token){
 
         $query = "UPDATE $this->table_name
-                    SET last_login = now()
+                    SET last_login = now(), access_token = :token
+                    WHERE user_id = :id";
+      
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+        // execute query
+        $stmt->execute(['id' => $id, 'token' => $token]);
+        return $stmt;
+        }
+
+    /**
+     * GET ALL USER INFO BY USERNAME
+     */
+    function userInfo($id){
+
+        $query = "SELECT *
+                    FROM $this->table_name 
                     WHERE user_id = :id";
       
         // prepare query statement
@@ -127,4 +159,5 @@ class Users{
         $stmt->execute(['id' => $id]);
         return $stmt;
         }
+
 }

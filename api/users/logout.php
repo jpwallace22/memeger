@@ -1,6 +1,13 @@
 <?php
 include '../config/config.php';
 
+
+//TODO remove access token from db
+
+//invalidate all cookies and session vars
+setcookie('access_token', 0, time() - 9999);
+setcookie('user_id', 0, time() - 9999);
+
 // @ https://www.php.net/manual/en/function.session-destroy.php
 
 // Unset all of the session variables.

@@ -14,6 +14,10 @@ export const UserProvider = ({ children }) => {
     getProfileInfo,
   };
 
+  if (!userState.user.user_id && localStorage.getItem("loggedUser") != null) {
+    setUser(JSON.parse(localStorage.getItem("loggedUser")));
+  }
+
   //---------FUNCTIONS------------//
 
   async function userLogin(input) {
