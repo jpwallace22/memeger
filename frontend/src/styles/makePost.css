@@ -47,10 +47,6 @@
   padding: 1rem;
 }
 .new-post div.allow-comments {
-  display: flex;
-  flex-direction: row-reverse;
-  align-items: center;
-  gap: 1rem;
   max-width: 400px;
   width: 100%;
   margin: 0 auto;
@@ -66,8 +62,68 @@ input[type="file"]::file-selector-button {
   font-size: 1.2rem;
   margin: 2rem 1rem 2rem 0;
 }
-
 input[type="file"]::file-selector-button:hover {
   filter: brightness(1.2);
   cursor: pointer;
+}
+/*  https://codepen.io/bbodine1/pen/DqdMRy [.slideThree] */
+.slideThree {
+  width: 80px;
+  height: 26px;
+  background: #333;
+  margin: 20px 0;
+  position: relative;
+  border-radius: 50px;
+  box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.5),
+    0px 1px 0px rgba(255, 255, 255, 0.2);
+}
+.slideThree:after {
+  content: "OFF";
+  color: #000;
+  position: absolute;
+  right: 10px;
+  z-index: 0;
+  font: 12px/26px Arial, sans-serif;
+  font-weight: bold;
+  text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.15);
+}
+.slideThree:before {
+  content: "ON";
+  color: var(--pink);
+  position: absolute;
+  left: 10px;
+  z-index: 0;
+  font: 12px/26px Arial, sans-serif;
+  font-weight: bold;
+}
+.slideThree label {
+  display: block;
+  width: 34px;
+  height: 20px;
+  cursor: pointer;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  z-index: 1;
+  background: #fcfff4;
+  background: linear-gradient(to bottom, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+  border-radius: 50px;
+  transition: all 0.4s ease;
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
+}
+.slideThree input[type="checkbox"] {
+  visibility: hidden;
+}
+.slideThree input[type="checkbox"]:checked + label {
+  left: 43px;
+}
+span.label {
+  position: absolute;
+  min-width: 200px;
+  top: 4%;
+  left: 110%;
+}
+.new-post button {
+  margin: 2.5rem auto 0.5rem;
+  min-width: 200px;
 }

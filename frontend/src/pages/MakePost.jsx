@@ -18,6 +18,7 @@ function MakePost() {
   //form state
   const [errors, setErrors] = useState({});
   const [src, setSrc] = useState();
+  const [loading, setLoading] = useState(false);
 
   //hooks
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ function MakePost() {
   };
 
   const handleChange = async ({ target }) => {
+    setLoading(true);
     const data = new FormData();
     data.append("uploadedfile", target.files[0]);
     data.append("user_id", user.user_id);
@@ -38,6 +40,8 @@ function MakePost() {
       body: data,
     });
     console.log(res);
+
+    setLoading(false);
   };
 
   return (
@@ -57,6 +61,7 @@ function MakePost() {
           name="user-title"
           id="user-title"
           className="title"
+          placeholder="Add Title"
         />
         <input
           type="file"
@@ -65,7 +70,7 @@ function MakePost() {
           className="image"
           onChange={(e) => handleChange(e)}
           accept="image/png, image/jpeg"
-          enctype="multipart/form-data"
+          encType="multipart/form-data"
         />
         {src && <img src={src} alt="" />}
         <textarea
@@ -74,17 +79,21 @@ function MakePost() {
           cols="30"
           rows="5"
           className="body"
+          placeholder="Add a description. This can left blank if you want... But I wouldn't recommend it"
         ></textarea>
         <div className="allow-comments">
-          <label htmlFor="allow-comments">Allow Comments</label>
-          <input
-            type="checkbox"
-            name="allow-comments"
-            id="allow-comments"
-            className="allow-comments"
-            defaultChecked
-          />
+          <div class="slideThree">
+            <input
+              type="checkbox"
+              id="allow_comments"
+              name="allow_comments"
+              defaultChecked
+            />
+            <label for="allow_comments"></label>
+            <span className="label">Allow Comments</span>
+          </div>
         </div>
+        <Button primary>POST</Button>
       </form>
     </main>
   );
