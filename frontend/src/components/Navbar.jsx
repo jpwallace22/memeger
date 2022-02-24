@@ -48,10 +48,12 @@ function Navbar() {
   return (
     <header>
       <nav className="navbar">
-        <Button primary>
-          <GoDiffAdded size={24} />
-          <span className="no-mobile">Post</span>
-        </Button>
+        <Link to="/new-post">
+          <Button primary>
+            <GoDiffAdded size={24} />
+            <span className="no-mobile">Post</span>
+          </Button>
+        </Link>
         <Link to="/" className="header-logo">
           <Logo />
         </Link>

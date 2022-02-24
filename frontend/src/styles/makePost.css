@@ -1,0 +1,73 @@
+.new-post .logo {
+  width: 60%;
+  max-width: 375px;
+  margin: 0 auto 2rem;
+}
+.new-post .back svg {
+  font-size: 4rem;
+  margin: 1rem 2rem 0;
+  cursor: pointer;
+}
+.new-post .back svg:hover {
+  color: var(--pink);
+}
+.new-post form {
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+}
+.new-post .title,
+.new-post .image,
+.new-post .body {
+  display: block;
+  margin: 1rem auto;
+  background-color: transparent;
+  font-family: var(--font-stack);
+  border: none;
+  max-width: 400px;
+  width: 100%;
+}
+.new-post .user-image {
+  width: 100%;
+}
+.new-post .title {
+  font-size: 1.5rem;
+  text-align: center;
+  width: 100%;
+  max-width: 400px;
+  color: var(--white);
+  font-weight: 600;
+  border-bottom: 2px solid var(--white);
+}
+.new-post .body {
+  color: var(--light-grey);
+  font-size: 1rem;
+  line-height: 1.5;
+  border: 2px solid var(--white);
+  padding: 1rem;
+}
+.new-post div.allow-comments {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: 1rem;
+  max-width: 400px;
+  width: 100%;
+  margin: 0 auto;
+}
+input[type="file"]::file-selector-button {
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  background-color: var(--gold);
+  transition: 0.3s;
+  font-family: var(--font-stack);
+  font-weight: 600;
+  font-size: 1.2rem;
+  margin: 2rem 1rem 2rem 0;
+}
+
+input[type="file"]::file-selector-button:hover {
+  filter: brightness(1.2);
+  cursor: pointer;
+}

@@ -1,1 +1,5 @@
-{}
+{
+  "dependencies": {
+    "@idui/react-file-input": "^1.2.11"
+  }
+}
