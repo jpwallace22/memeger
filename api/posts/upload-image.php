@@ -88,13 +88,19 @@ if( isset($_FILES['uploadedfile']['tmp_name']) ){
 		//clean up old resources
 		imagedestroy($src);
 		imagedestroy($canvas);
-
-echo $filepath;
-		//TODO: Add post to Database
+		if($did_save){
+			http_response_code(200);
+		echo json_encode(array( "src" => $filepath));
+		} else {
+			http_response_code(500);
+			echo json_encode(array( "error" => 'There was a problem uploading your image'));
+		}
+		
 
 	}//end if valid
 	else{
-		$feedback = 'There was a problem uploading your image, fix the following:';
+		http_response_code(500);
+		echo json_encode(array( "error" => 'There was a problem uploading your image'));
 	}
 
 }//end upload parser

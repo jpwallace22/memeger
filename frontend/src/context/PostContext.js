@@ -5,13 +5,16 @@ const PostContext = createContext();
 export const PostProvider = ({ children }) => {
   const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
   const [sortBy, setSortBy] = useState("p.date");
+  const [search, setSearch] = useState(null);
 
   //GLOBAL STATE AND FUNCTIONS FOR ALL POSTS
   const postState = {
     date,
     sortBy,
+    search,
     setDate,
     setSortBy,
+    setSearch,
     getPosts,
     getSinglePost,
     registerNewUser,
@@ -27,10 +30,16 @@ export const PostProvider = ({ children }) => {
    * @param order string (default 'p.date') -- Order by date or votes
    * @returns - JSON data
    */
-  async function getPosts(date, limit = 20, offset = 0, order = "p.date") {
+  async function getPosts(
+    date,
+    limit = 20,
+    offset = 0,
+    order = "p.date",
+    search = ""
+  ) {
     try {
       const response = await fetch(
-        `/api/posts/date.php?date=${date}&limit=${limit}&offset=${offset}&order=${order}`
+        `/api/posts/date.php?date=${date}&limit=${limit}&offset=${offset}&order=${order}&search=${search}`
       );
       const posts = await response.json();
       return posts;

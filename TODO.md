@@ -13,3 +13,5 @@
 - refactor (date/post/register/user) API to accept JSON instead of string variables
 - change username varchar to 24
 - add timeAgo() function to be friendly for the number 1
+
+- CHANGE ALL DYNAMIC FILE PATHS TO THE PUBLIC FOLDER

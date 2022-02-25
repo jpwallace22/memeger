@@ -6,10 +6,11 @@ import Navbar from "../components/Navbar";
 import SortDropdown from "../components/SortDropdown";
 import DayDropdown from "../components/DayDropdown";
 import Loader from "../components/Loader";
+import SearchBar from "../components/SearchBar";
 
 function Home() {
   //Post state
-  const { date, sortBy, getPosts } = useContext(PostContext);
+  const { date, sortBy, search, getPosts } = useContext(PostContext);
 
   //Component State
   const [posts, setPosts] = useState([]);
@@ -19,19 +20,20 @@ function Home() {
     //fetch posts for today
     async function getTodaysPosts() {
       setIsLoading(true);
-      const posts = await getPosts(date, undefined, undefined, sortBy);
+      const posts = await getPosts(date, undefined, undefined, sortBy, search);
       setPosts(posts);
       setIsLoading(false);
     }
     getTodaysPosts();
     //will automatically rerun if the date or sortby options are changed
-  }, [date, sortBy, getPosts]);
+  }, [date, sortBy, getPosts, search]);
 
   return (
     <>
       <Navbar />
       <main>
         <div className="homepage-ui">
+          <SearchBar />
           <SortDropdown />
           <DayDropdown />
         </div>

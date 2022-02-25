@@ -31,7 +31,9 @@ $date = clean_string( $_GET["date"] );
 $limit = clean_int( $_GET["limit"] );
 $offset = clean_int( $_GET["offset"] );
 $order = clean_string($_GET["order"]);
-$stmt = $posts->get_posts($date, $limit, $offset, $order);
+$search = clean_string( $_GET["search"]);
+$search = "%$search%";
+$stmt = $posts->get_posts($date, $limit, $offset, $order, $search);
 $num = $stmt->rowCount();
 
 // check if more than 0 record found

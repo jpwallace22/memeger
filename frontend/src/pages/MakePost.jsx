@@ -82,14 +82,14 @@ function MakePost() {
           placeholder="Add a description. This can left blank if you want... But I wouldn't recommend it"
         ></textarea>
         <div className="allow-comments">
-          <div class="slideThree">
+          <div className="slideThree">
             <input
               type="checkbox"
               id="allow_comments"
               name="allow_comments"
               defaultChecked
             />
-            <label for="allow_comments"></label>
+            <label htmlFor="allow_comments"></label>
             <span className="label">Allow Comments</span>
           </div>
         </div>
