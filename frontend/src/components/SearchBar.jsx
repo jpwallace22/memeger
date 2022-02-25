@@ -4,10 +4,10 @@ import PostContext from "../context/PostContext";
 import { FaSearch } from "react-icons/fa";
 
 function SearchBar() {
-  const { search, useSearch } = useContext(PostContext);
+  const { search, setSearch } = useContext(PostContext);
 
-  const handleChange = () => {
-    console.log("thing");
+  const handleChange = (value) => {
+    setSearch(value);
   };
 
   return (
@@ -19,7 +19,7 @@ function SearchBar() {
           name="search-bar"
           id="search-bar"
           className="search-input"
-          onChange={handleChange}
+          onChange={({ target }) => handleChange(target.value)}
           value={search}
           placeholder="Title, Description, or Username"
         />

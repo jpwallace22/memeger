@@ -55,9 +55,11 @@ class Posts{
                     WHERE p.date
                     BETWEEN :startdate AND '$todays_date 23:59:59'
                         AND p.is_published = 1
-                        OR p.title LIKE :search
-                        OR p.body LIKE :search
-                        OR u.username LIKE :search
+                        AND (
+                             p.title LIKE :search
+                             OR p.body LIKE :search
+                             OR u.username LIKE :search
+                             )
                     GROUP BY p.post_id
                     ORDER BY $order DESC
                     LIMIT :amount OFFSET :off_set";
