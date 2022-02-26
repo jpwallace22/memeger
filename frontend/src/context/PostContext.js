@@ -18,6 +18,7 @@ export const PostProvider = ({ children }) => {
     getPosts,
     getSinglePost,
     registerNewUser,
+    getSearchResults,
   };
 
   //---------FUNCTIONS------------//
@@ -35,7 +36,7 @@ export const PostProvider = ({ children }) => {
     limit = 20,
     offset = 0,
     order = "p.date",
-    search = ""
+    search = null
   ) {
     try {
       const response = await fetch(
@@ -58,6 +59,21 @@ export const PostProvider = ({ children }) => {
       const response = await fetch(`/api/posts/post.php?post_id=${id}`);
       const post = await response.json();
       return post;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  /**
+   * FETCHES A SINGLE POST FROM THE API
+   * @param id int  -- post_id of post requesting
+   * @returns - JSON data
+   */
+  async function getSearchResults(string) {
+    try {
+      const response = await fetch(`/api/posts/search.php?search=${string}`);
+      const posts = await response.json();
+      return posts;
     } catch (error) {
       throw new Error(error);
     }

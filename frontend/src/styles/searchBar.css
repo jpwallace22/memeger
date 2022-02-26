@@ -3,7 +3,7 @@
 }
 .search-bar {
   width: 100%;
-  max-width: 450px;
+  max-width: 480px;
   margin: 0 auto;
   padding: 2rem 1rem;
   position: relative;
@@ -11,7 +11,7 @@
 .search-input {
   display: block;
   width: 100%;
-  min-height: 42px;
+  min-height: 40px;
   background-color: transparent;
   border: 1px solid var(--light-grey);
   border-radius: 5px;
@@ -28,4 +28,9 @@
   top: 39%;
   left: 30px;
   font-size: 1.5rem;
+}
+.search-button {
+  position: absolute;
+  right: 14px;
+  top: 31%;
 }

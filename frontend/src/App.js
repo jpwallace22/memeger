@@ -9,6 +9,7 @@ import Footer from "./components/Footer";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import MakePost from "./pages/MakePost";
+import About from "./pages/About";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/new-post" element={<MakePost />} />
           <Route path="/profile/:username" element={<Profile />} />
+          <Route path="/about" element={<About />} />
         </Routes>
         <Footer />
       </PostProvider>

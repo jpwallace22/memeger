@@ -10,7 +10,7 @@ import SearchBar from "../components/SearchBar";
 
 function Home() {
   //Post state
-  const { date, sortBy, search, getPosts } = useContext(PostContext);
+  const { date, sortBy, getPosts } = useContext(PostContext);
 
   //Component State
   const [posts, setPosts] = useState([]);
@@ -20,20 +20,20 @@ function Home() {
     //fetch posts for today
     async function getTodaysPosts() {
       setIsLoading(true);
-      const posts = await getPosts(date, undefined, undefined, sortBy, search);
+      const posts = await getPosts(date, undefined, undefined, sortBy);
       setPosts(posts);
       setIsLoading(false);
     }
     getTodaysPosts();
     //will automatically rerun if the date or sortby options are changed
-  }, [date, sortBy, getPosts, search]);
+  }, [date, sortBy, getPosts]);
 
   return (
     <>
       <Navbar />
       <main>
         <div className="homepage-ui">
-          <SearchBar />
+          <SearchBar setPosts={setPosts} />
           <SortDropdown />
           <DayDropdown />
         </div>

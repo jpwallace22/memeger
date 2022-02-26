@@ -4,9 +4,9 @@ include '../config/middleware.php';
 
 /**
  * FETCHES ALL POSTS
- * :: endpoint ==> /api/posts/date.php?date=@param&limit=@param&offset=@param&order=@param 
+ * :: endpoint ==> /api/posts/search.php?=@param 
  * 
- *@param mixed
+ *@param string
  */
 
 // required headers
@@ -17,8 +17,6 @@ header("Content-Type: application/json; charset=UTF-8");
 include_once '../config/database.php';
 include_once '../objects/posts.php';
 
-
-  
 // instantiate database and product object
 $database = new Database();
 $db = $database->getConnection();
@@ -27,11 +25,11 @@ $db = $database->getConnection();
 $posts = new Posts($db);
   
 // query posts
-$date = clean_string( $_GET["date"] );
-$limit = clean_int( $_GET["limit"] );
-$offset = clean_int( $_GET["offset"] );
-$order = clean_string($_GET["order"]);
-$stmt = $posts->get_posts($date, $limit, $offset, $order);
+$search = clean_string( $_GET["search"]);
+$search = "%$search%";
+$stmt = $posts->search($search);
+// echo debug_statement($stmt);
+
 $num = $stmt->rowCount();
 
 // check if more than 0 record found
@@ -79,6 +77,6 @@ if($num>0){
 
     // return error if not found
     echo json_encode(
-        array("error" => "Fresh out of posts.")
+        array("error" => "Zero search results!")
     );
 }

@@ -67,10 +67,10 @@ header {
   .user-button .dropdown-menu {
     top: 250%;
   }
+  .user-button .dropdown-triangle {
+    bottom: 100%;
+  }
   @media screen and (min-width: 720px) {
-    .user-button svg {
-      margin-left: 75px;
-    }
     .user-button .dropdown-menu {
       right: 0%;
     }

@@ -32,7 +32,7 @@ class Posts{
      * @param int       $limit (default 20) -- Amount of posts fetched
      * @param int       $offset (default 0) -- Where in the list it starts
      */
-    function get_posts($date, $limit, $offset, $order, $search){
+    function get_posts($date, $limit, $offset, $order){
         //todays date for the endpoint on the query
         $todays_date = date("Y-m-d");
 
@@ -55,11 +55,6 @@ class Posts{
                     WHERE p.date
                     BETWEEN :startdate AND '$todays_date 23:59:59'
                         AND p.is_published = 1
-                        AND (
-                             p.title LIKE :search
-                             OR p.body LIKE :search
-                             OR u.username LIKE :search
-                             )
                     GROUP BY p.post_id
                     ORDER BY $order DESC
                     LIMIT :amount OFFSET :off_set";
@@ -70,7 +65,6 @@ class Posts{
         $stmt->bindValue(':amount', $limit, PDO::PARAM_INT);
         $stmt->bindValue(':off_set', $offset, PDO::PARAM_INT);
         $stmt->bindValue(':startdate', $date, PDO::PARAM_STR);
-        $stmt->bindValue(':search', $search, PDO::PARAM_STR);
         // execute query
         $stmt->execute();
       
@@ -159,4 +153,42 @@ class Posts{
       
         return $stmt;
         }
+
+         /**
+     * RETRIEVE POSTS & INFO BY DATE WITH FLEXIBLE LIMIT AND OFFSET FOR PAGINATION 
+     * 
+     * @param string    $date "YYYY-MM-DD" -- start date of the search
+     * @param int       $limit (default 20) -- Amount of posts fetched
+     * @param int       $offset (default 0) -- Where in the list it starts
+     */
+    function search($search){
+        // select all query
+        $query = "  SELECT p.*, COUNT( DISTINCT c.comment_id) AS comments_count, u.username, u.profile_pic, COUNT( DISTINCT v.user_id) AS votes
+                    FROM posts AS p
+                        LEFT JOIN comments AS c
+                        ON p.post_id = c.post_id
+                        LEFT JOIN users AS u
+                        ON p.user_id = u.user_id
+                        LEFT JOIN votes AS v
+                        ON p.post_id = v.post_id
+                    WHERE p.is_published = 1
+                        AND (
+                             p.title LIKE :search
+                             OR p.body LIKE :search
+                             OR u.username LIKE :search
+                             )
+                    GROUP BY p.post_id
+                    ORDER BY p.date DESC";
+
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+        //bind variables
+        $stmt->bindValue(':search', $search, PDO::PARAM_STR);
+        // execute query
+        $stmt->execute();
+        
+      
+        return $stmt;
+        }
+
 }

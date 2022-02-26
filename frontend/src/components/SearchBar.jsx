@@ -1,29 +1,41 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import "../styles/searchBar.css";
 import PostContext from "../context/PostContext";
 import { FaSearch } from "react-icons/fa";
+import Button from "./Button";
 
-function SearchBar() {
-  const { search, setSearch } = useContext(PostContext);
+function SearchBar({ setPosts }) {
+  const { getSearchResults } = useContext(PostContext);
 
-  const handleChange = (value) => {
-    setSearch(value);
+  const [search, setSearch] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const asyncSearch = async () => {
+      const posts = await getSearchResults(search);
+      setPosts(posts);
+      !posts.error && setSearch("");
+    };
+    asyncSearch();
   };
 
   return (
     <div className="search-bar-wrapper">
-      <div className="search-bar">
+      <form className="search-bar" onSubmit={(e) => handleSubmit(e)}>
         <FaSearch className="search-icon" />
         <input
           type="text"
           name="search-bar"
           id="search-bar"
           className="search-input"
-          onChange={({ target }) => handleChange(target.value)}
+          onChange={({ target }) => setSearch(target.value)}
           value={search}
           placeholder="Title, Description, or Username"
         />
-      </div>
+        <Button secondary className="search-button">
+          Search
+        </Button>
+      </form>
     </div>
   );
 }

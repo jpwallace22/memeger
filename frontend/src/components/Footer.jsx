@@ -14,7 +14,7 @@ function Footer() {
       <div className="container">
         <div className="links">
           <Link to="/">Terms</Link>
-          <Link to="/">Privacy</Link>
+          <Link to="/about">About</Link>
         </div>
         <ul className="social">
           <li>
