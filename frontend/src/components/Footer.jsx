@@ -13,7 +13,8 @@ function Footer() {
     <footer>
       <div className="container">
         <div className="links">
-          <Link to="/">Terms</Link>
+          <Link to="/terms">Terms</Link>
+          <Link to="/privacy">Privacy</Link>
           <Link to="/about">About</Link>
         </div>
         <ul className="social">

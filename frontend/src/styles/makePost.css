@@ -127,3 +127,10 @@ span.label {
   margin: 2.5rem auto 0.5rem;
   min-width: 200px;
 }
+.not-logged {
+  width: 100%;
+  max-width: 650px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 5rem 1rem;
+}

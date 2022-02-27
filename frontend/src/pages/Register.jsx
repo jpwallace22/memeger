@@ -1,7 +1,8 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import "../styles/loginPage.css";
 import "../styles/register.css";
 import PostContext from "../context/PostContext";
+import UserContext from "../context/UserContext";
 import Button from "../components/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactComponent as Logo } from "../assets/images/logo.svg";
@@ -11,6 +12,7 @@ import { ImEye, ImEyeBlocked } from "react-icons/im";
 function Register() {
   //global state
   const { registerNewUser } = useContext(PostContext);
+  const { user } = useContext(UserContext);
 
   //form state
   const [username, setUsername] = useState("");
@@ -33,6 +35,10 @@ function Register() {
       navigate("/login?register=1");
     }
   };
+
+  useEffect(() => {
+    user.user_id && navigate("/");
+  }, []);
 
   //TODO add front end validation to ease the server
 

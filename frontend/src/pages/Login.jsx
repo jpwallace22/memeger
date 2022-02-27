@@ -1,8 +1,13 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import "../styles/loginPage.css";
 import UserContext from "../context/UserContext";
 import Button from "../components/Button";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import {
+  Link,
+  useNavigate,
+  useSearchParams,
+  useHistory,
+} from "react-router-dom";
 import { ReactComponent as Logo } from "../assets/images/logo.svg";
 import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
 import { ImEye, ImEyeBlocked } from "react-icons/im";
@@ -32,7 +37,7 @@ function Login() {
     if (data.user_id) {
       setUser(data);
       localStorage.setItem("loggedUser", JSON.stringify(data));
-      navigate("/");
+      navigate(-1);
     }
   };
 

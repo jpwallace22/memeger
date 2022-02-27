@@ -1,25 +1,41 @@
-.about .container {
+.terms .logo {
+  width: 60%;
+  max-width: 375px;
+  margin: 0 auto 2rem;
+}
+.terms a {
+  color: var(--gold);
+}
+.terms .back svg {
+  font-size: 4rem;
+  margin: 1rem 2rem 0;
+  cursor: pointer;
+}
+.terms .back svg:hover {
+  color: var(--pink);
+}
+.terms .container {
   padding: 2rem 1rem;
   width: 100%;
   max-width: 900px;
   margin: 0 auto;
 }
-.about h1 {
+.terms h1 {
   font-size: 2.4rem;
   text-align: center;
   margin-top: 2rem;
 }
-.about h2,
-.about h3 {
+.terms h2,
+.terms h3 {
   margin: 0 0 0.75rem;
 }
-.about h2 {
+.terms h2 {
   font-size: 1.75rem;
 }
-.about h3 {
+.terms h3 {
   font-size: 1.3rem;
 }
-.about p {
+.terms p {
   margin: 0 0 0.75rem;
 }
 .dev-logo {
@@ -31,6 +47,6 @@
 .plug {
   text-align: center;
 }
-.about .card {
+.terms .card {
   margin: 1rem 0;
 }

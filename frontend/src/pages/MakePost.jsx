@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import "../styles/loginPage.css";
 import "../styles/makePost.css";
 import PostContext from "../context/PostContext";
@@ -7,8 +7,6 @@ import Button from "../components/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactComponent as Logo } from "../assets/images/logo.svg";
 import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
-import { ImEye, ImEyeBlocked, ImGift } from "react-icons/im";
-import FileInput, { UploadArea } from "@idui/react-file-input";
 
 function MakePost() {
   //global state
@@ -55,46 +53,55 @@ function MakePost() {
           <Logo />
         </Link>
       </div>
-      <form className="card" onSubmit={(e) => handleSubmit(e)}>
-        <input
-          type="text"
-          name="user-title"
-          id="user-title"
-          className="title"
-          placeholder="Add Title"
-        />
-        <input
-          type="file"
-          name="user-image"
-          id="user-image"
-          className="image"
-          onChange={(e) => handleChange(e)}
-          accept="image/png, image/jpeg"
-          encType="multipart/form-data"
-        />
-        {src && <img src={src} alt="" />}
-        <textarea
-          name="body"
-          id="user-body"
-          cols="30"
-          rows="5"
-          className="body"
-          placeholder="Add a description. This can left blank if you want... But I wouldn't recommend it"
-        ></textarea>
-        <div className="allow-comments">
-          <div className="slideThree">
-            <input
-              type="checkbox"
-              id="allow_comments"
-              name="allow_comments"
-              defaultChecked
-            />
-            <label htmlFor="allow_comments"></label>
-            <span className="label">Allow Comments</span>
-          </div>
+      {!user.user_id ? (
+        <div className="card not-logged">
+          <h2>You must be logged in to make a post.</h2>
+          <Link to="/login">
+            <Button primary>Log In</Button>
+          </Link>
         </div>
-        <Button primary>POST</Button>
-      </form>
+      ) : (
+        <form className="card" onSubmit={(e) => handleSubmit(e)}>
+          <input
+            type="text"
+            name="user-title"
+            id="user-title"
+            className="title"
+            placeholder="Add Title"
+          />
+          <input
+            type="file"
+            name="user-image"
+            id="user-image"
+            className="image"
+            onChange={(e) => handleChange(e)}
+            accept="image/png, image/jpeg"
+            encType="multipart/form-data"
+          />
+          {src && <img src={src} alt="" />}
+          <textarea
+            name="body"
+            id="user-body"
+            cols="30"
+            rows="5"
+            className="body"
+            placeholder="Add a description. This can left blank if you want... But I wouldn't recommend it"
+          ></textarea>
+          <div className="allow-comments">
+            <div className="slideThree">
+              <input
+                type="checkbox"
+                id="allow_comments"
+                name="allow_comments"
+                defaultChecked
+              />
+              <label htmlFor="allow_comments"></label>
+              <span className="label">Allow Comments</span>
+            </div>
+          </div>
+          <Button primary>POST</Button>
+        </form>
+      )}
     </main>
   );
 }
