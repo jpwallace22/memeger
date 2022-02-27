@@ -35,6 +35,7 @@ $posts = new Posts($db);
 
 //get profile information
 $stmt = $users->profile_page_info($username);
+// debug_statement($stmt);
 $num = $stmt->rowCount();
 
 // check if more than 0 record found
@@ -92,6 +93,12 @@ if($num>0){
 
    $user['posts'] = $post_arr;
     // set response code - 200 OK
+    http_response_code(200);
+  
+    // show users data in json format
+    echo json_encode($user);
+    } else {
+        // set response code - 200 OK
     http_response_code(200);
   
     // show users data in json format
