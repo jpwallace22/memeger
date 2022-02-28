@@ -30,6 +30,9 @@
 .post-ui .post-ui-right {
   font-size: 1.5rem;
 }
+.post-ui svg {
+  cursor: pointer;
+}
 .post-ui .votes,
 .post-ui .fav {
   margin-right: 0.5rem;

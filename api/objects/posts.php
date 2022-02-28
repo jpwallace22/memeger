@@ -223,4 +223,58 @@ class Posts{
         return $stmt;
         }
 
+    /**
+     * CHECK IF A USER HAS VOTED
+     */
+function check_vote($post_id, $user_id){
+    $params = [
+        'user_id' => $user_id,
+        'post_id' => $post_id,
+    ];
+    // select all query
+    $query ="SELECT * FROM votes
+             WHERE user_id = :user_id
+             AND post_id = :post_id
+             LIMIT 1";
+    
+    $stmt = $this->conn->prepare($query);
+    $stmt->execute($params);
+    return $stmt;
+}
+
+
+
+    /**
+     * ADD OR REMOVE VOTE
+     */
+    function vote($post_id, $user_id){
+        $params = [
+            'user_id' => $user_id,
+            'post_id' => $post_id,
+        ];
+        // select all query
+        $query ="SELECT * FROM votes
+                 WHERE user_id = :user_id
+                 AND post_id = :post_id
+                 LIMIT 1";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute($params);
+
+        //delete or add query
+        if( $stmt->rowCount() >= 1 ){
+            $query = "DELETE FROM votes
+                        WHERE user_id = :user_id
+                        AND post_id = :post_id";
+        }else{
+            $query = "INSERT INTO votes
+                        (user_id, post_id, date)
+                        VALUES
+                        ( :user_id, :post_id, now() )";
+        }
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute($params);
+        return $stmt;
+        }
+
 }

@@ -1,14 +1,40 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect } from "react";
 import "../styles/postItem.css";
+import UserContext from "../context/UserContext";
+import { Link, useNavigate } from "react-router-dom";
 import { ImArrowUp } from "react-icons/im";
 // eslint-disable-next-line no-unused-vars
 import { FaCommentAlt, FaRegHeart, FaHeart } from "react-icons/fa";
 import { IoShareOutline } from "react-icons/io5";
 
 function PostItem({ post }) {
-  const handleVote = () => {
-    console.log("upvote");
+  const { user } = useContext(UserContext);
+
+  const navigate = useNavigate();
+
+  const payload = {
+    post_id: post.post_id,
+    user_id: user.user_id,
+  };
+
+  const checkVote = async () => {
+    const res = await fetch("/api/posts/vote.php", {
+      method: "POST",
+      body: JSON.stringify(payload),
+    });
+    const data = await res.text();
+  };
+
+  const handleVote = async () => {
+    if (user.user_id) {
+      const res = await fetch("/api/posts/vote.php", {
+        method: "PUT",
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json();
+    } else {
+      navigate("/login");
+    }
   };
 
   return (
@@ -27,7 +53,11 @@ function PostItem({ post }) {
       </Link>
       <div className="post-ui">
         <div className="post-ui-left">
-          <ImArrowUp onClick={handleVote} />{" "}
+          {checkVote() ? (
+            <ImArrowUp onClick={handleVote} color="var(--gold)" />
+          ) : (
+            <ImArrowUp onClick={handleVote} />
+          )}
           <span className="votes"> {post.votes} </span>
           <FaCommentAlt />{" "}
           <span className="comments"> {post.comments_count} </span>
