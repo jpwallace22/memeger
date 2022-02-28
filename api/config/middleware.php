@@ -1,4 +1,6 @@
 <?php
+include_once '../config/database.php';
+include_once '../config/config.php';
 
 /**
  * ## https://phpdelusions.net/pdo/whitelisting_helper_function ##
@@ -24,21 +26,26 @@ function white_list( $value, $allowed, $message) {
  * @return array|bool false if not logged in, array of all user data if they are logged in
  */
 
-function check_login(){
+function check_login($id = 0){
     //if the cookie is valid, turn it into session data
     if(isset($_COOKIE['access_token']) AND isset($_COOKIE['user_id'])){
         $_SESSION['access_token'] = $_COOKIE['access_token'];
         $_SESSION['user_id'] = $_COOKIE['user_id'];
+    }
+    if($id){
+        if($_SESSION['user_id'] != $id){
+            return false;
+        }
     }
     
    //if the session is valid, check their credentials
    if( isset($_SESSION['access_token']) AND isset($_SESSION['user_id']) ){
         //check to see if these keys match the DB     
 
-       $data = array(
-       	'id' => $_SESSION['user_id'],
-       	'access_token' =>$_SESSION['access_token'],
-       );
+    //    $data = array(
+    //    	'id' => $_SESSION['user_id'],
+    //    	'access_token' =>$_SESSION['access_token'],
+    //    );
        include_once '../objects/users.php';
 
         // instantiate database and product object
@@ -48,7 +55,7 @@ function check_login(){
         // initialize object
         $users = new Users($db);
 
-        $stmt = $users->check_if_logged($_SESSION['access_token']);
+        $stmt = $users->check_if_logged($_SESSION['access_token'], $_SESSION['user_id']);
         $num = $stmt->rowCount();
        
         if($num > 0){

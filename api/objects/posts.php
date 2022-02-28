@@ -44,7 +44,7 @@ class Posts{
         $date = "$date 00:00:00";
 
         // select all query
-        $query = "  SELECT p.*, COUNT( DISTINCT c.comment_id) AS comments_count, u.username, u.profile_pic, COUNT( DISTINCT v.user_id) AS votes
+        $query = "  SELECT p.*, COUNT( DISTINCT c.comment_id) AS comments_count, u.username, u.profile_pic, COUNT(DISTINCT v.user_id) AS votes
                     FROM posts AS p
                         LEFT JOIN comments AS c
                         ON p.post_id = c.post_id
@@ -78,12 +78,14 @@ class Posts{
      */
     function get_single_post($id){
         // select all query
-        $query = "  SELECT p.*, COUNT(c.comment_id) as comments_count, u.username, u.profile_pic
+        $query = "  SELECT p.*, COUNT( DISTINCT c.comment_id) AS comments_count, u.username, u.profile_pic, COUNT(DISTINCT v.user_id) AS votes
                     FROM posts AS p
                         LEFT JOIN comments AS c
                         ON p.post_id = c.post_id
                         LEFT JOIN users AS u
                         ON p.user_id = u.user_id
+                        LEFT JOIN votes AS v
+                        ON p.post_id = v.post_id
                         WHERE p.post_id = :id
                     GROUP BY p.post_id
                     ORDER BY p.date DESC
@@ -187,6 +189,36 @@ class Posts{
         // execute query
         $stmt->execute();
         
+      
+        return $stmt;
+        }
+
+    /**
+     * ADD NEW POST
+     * 
+     * @param string - title
+     * @param string - body
+     * @param string - src
+     * @param int - allow_comments
+     * @param int - user_id
+     */
+    function add_new_post($title, $body, $src, $allow_comments, $user_id){
+        // select all query
+        $query = "  INSERT INTO $this->table_name
+                    (title, image, body, views, date, user_id, allow_comments, is_published, is_winner)
+                    VALUES
+                    (:title, :src, :body, 0, now(), :user_id, :allow_comments, 1, 0) ";
+
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+        // execute query
+        $stmt->execute([
+            'title' => $title,
+            'src' => $src,
+            'body' => $body,
+            'user_id' => $user_id,
+            'allow_comments' => $allow_comments,
+        ]);
       
         return $stmt;
         }

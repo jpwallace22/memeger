@@ -1,5 +1,11 @@
 <?php 
+include_once '../config/config.php';
 include '../config/middleware.php';
+
+if(!check_login()){
+	echo json_encode(check_login());
+	exit;
+}
 
 if( isset($_FILES['uploadedfile']['tmp_name']) ){
 	//upload configuration 
@@ -13,8 +19,6 @@ if( isset($_FILES['uploadedfile']['tmp_name']) ){
 	//grab the image that they uploaded
 	$uploadedfile = $_FILES['uploadedfile']['tmp_name'];
     $user_id = clean_int($_POST["user_id"]);
-
-    echo $user_id;
     
 	//validate
 	$valid = true;
@@ -83,6 +87,8 @@ if( isset($_FILES['uploadedfile']['tmp_name']) ){
 
 			$did_save = imagejpeg( $canvas, $filepath, 70 );
 
+			$res = substr($filepath, 5);
+
 		}//end foreach size
 
 		//clean up old resources
@@ -91,7 +97,7 @@ if( isset($_FILES['uploadedfile']['tmp_name']) ){
 		
 		if($did_save){
 			http_response_code(200);
-			echo json_encode(array( "src" => $filepath));
+			echo json_encode($res);
 		} else {
 			http_response_code(500);
 			echo json_encode(array( "error" => 'There was a problem uploading your image'));

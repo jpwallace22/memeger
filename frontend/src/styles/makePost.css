@@ -24,7 +24,6 @@
   background-color: transparent;
   font-family: var(--font-stack);
   border: none;
-  max-width: 400px;
   width: 100%;
 }
 .new-post .user-image {
@@ -45,11 +44,6 @@
   line-height: 1.5;
   border: 2px solid var(--white);
   padding: 1rem;
-}
-.new-post div.allow-comments {
-  max-width: 400px;
-  width: 100%;
-  margin: 0 auto;
 }
 input[type="file"]::file-selector-button {
   border: none;
@@ -133,4 +127,8 @@ span.label {
   margin: 0 auto;
   text-align: center;
   padding: 5rem 1rem;
+}
+.new-post img {
+  width: 100%;
+  margin: 1rem 0;
 }

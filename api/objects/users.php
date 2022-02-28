@@ -82,7 +82,7 @@ class Users{
     /**
      * CHECKS IF THE USER IS LOGGED IN BY ACCESS TOKEN
      */
-    function check_if_logged($token){
+    function check_if_logged($token, $id){
 
     $query = "SELECT * FROM users
                 WHERE user_id = :id
@@ -91,7 +91,7 @@ class Users{
     // prepare query statement
     $stmt = $this->conn->prepare($query);
     // execute query
-    $stmt->execute(array( 'token' => $token ));
+    $stmt->execute(array( 'token' => $token, 'id' => $id ));
     return $stmt;
     }
 

@@ -14,9 +14,12 @@ function MakePost() {
   const { user } = useContext(UserContext);
 
   //form state
+  const [invalid, setInvalid] = useState("");
   const [errors, setErrors] = useState({});
   const [src, setSrc] = useState();
-  const [loading, setLoading] = useState(false);
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
+  const [allow_comments, setAllow_comments] = useState(1);
 
   //hooks
   const navigate = useNavigate();
@@ -24,22 +27,32 @@ function MakePost() {
   //on form submit, send data to register user API, redirect if success.
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const payload = {
+      title,
+      src,
+      body,
+      allow_comments,
+      user_id: user.user_id,
+    };
+    const res = await fetch("/api/posts/post.php", {
+      method: "POST",
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json();
+    data === "success" && navigate("/");
+    data === "error" && setInvalid("There was an error with the post.");
   };
 
-  const handleChange = async ({ target }) => {
-    setLoading(true);
+  const handleImageUpload = async ({ target }) => {
     const data = new FormData();
     data.append("uploadedfile", target.files[0]);
     data.append("user_id", user.user_id);
-
-    console.log(target.files[0]);
     const res = await fetch("/api/posts/upload-image.php", {
       method: "POST",
       body: data,
     });
-    console.log(res);
-
-    setLoading(false);
+    const src = await res.json();
+    setSrc(src);
   };
 
   return (
@@ -68,16 +81,22 @@ function MakePost() {
             id="user-title"
             className="title"
             placeholder="Add Title"
+            value={title}
+            onChange={({ target }) => setTitle(target.value)}
           />
-          <input
-            type="file"
-            name="user-image"
-            id="user-image"
-            className="image"
-            onChange={(e) => handleChange(e)}
-            accept="image/png, image/jpeg"
-            encType="multipart/form-data"
-          />
+          {!src ? (
+            <input
+              type="file"
+              name="user-image"
+              id="user-image"
+              className="image"
+              onChange={(e) => handleImageUpload(e)}
+              accept="image/png, image/jpeg"
+              encType="multipart/form-data"
+            />
+          ) : (
+            <img src="/frontend/src/assets/images/posts/test.jpg" alt="" />
+          )}
           {src && <img src={src} alt="" />}
           <textarea
             name="body"
@@ -85,7 +104,9 @@ function MakePost() {
             cols="30"
             rows="5"
             className="body"
-            placeholder="Add a description. This can left blank if you want... But I wouldn't recommend it"
+            value={body}
+            placeholder="Add a description. It doesn't have to be long... but it IS required."
+            onChange={({ target }) => setBody(target.value)}
           ></textarea>
           <div className="allow-comments">
             <div className="slideThree">
@@ -94,11 +115,15 @@ function MakePost() {
                 id="allow_comments"
                 name="allow_comments"
                 defaultChecked
+                onChange={({ target }) =>
+                  target.checked ? setAllow_comments(1) : setAllow_comments(0)
+                }
               />
               <label htmlFor="allow_comments"></label>
               <span className="label">Allow Comments</span>
             </div>
           </div>
+          {invalid && invalid}
           <Button primary>POST</Button>
         </form>
       )}

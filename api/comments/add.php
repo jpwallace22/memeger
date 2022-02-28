@@ -41,7 +41,7 @@ $valid = true;
 //VALIDATE DATA
 //user is currently logged in
 
-if(check_login()){
+if(!check_login()){
     $valid = false;
     $errors['invalid'] = 'Oof, yeah, you gotta be logged in to comment';
 }
