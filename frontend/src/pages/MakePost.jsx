@@ -41,6 +41,8 @@ function MakePost() {
     const data = await res.json();
     data === "success" && navigate("/");
     data === "error" && setInvalid("There was an error with the post.");
+    data.errors && setErrors(data.errors);
+    console.log(data);
   };
 
   const handleImageUpload = async ({ target }) => {
@@ -75,6 +77,7 @@ function MakePost() {
         </div>
       ) : (
         <form className="card" onSubmit={(e) => handleSubmit(e)}>
+          {errors.title && <span className="error">{errors.title}</span>}
           <input
             type="text"
             name="user-title"
@@ -85,19 +88,23 @@ function MakePost() {
             onChange={({ target }) => setTitle(target.value)}
           />
           {!src ? (
-            <input
-              type="file"
-              name="user-image"
-              id="user-image"
-              className="image"
-              onChange={(e) => handleImageUpload(e)}
-              accept="image/png, image/jpeg"
-              encType="multipart/form-data"
-            />
+            <>
+              {errors.src && <span className="error">{errors.src}</span>}
+              <input
+                type="file"
+                name="user-image"
+                id="user-image"
+                className="image"
+                onChange={(e) => handleImageUpload(e)}
+                accept="image/png, image/jpeg"
+                encType="multipart/form-data"
+              />
+            </>
           ) : (
             <img src="/frontend/src/assets/images/posts/test.jpg" alt="" />
           )}
           {src && <img src={src} alt="" />}
+          {errors.body && <span className="error">{errors.body}</span>}
           <textarea
             name="body"
             id="user-body"

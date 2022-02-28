@@ -7,6 +7,10 @@ import { FaCommentAlt, FaRegHeart, FaHeart } from "react-icons/fa";
 import { IoShareOutline } from "react-icons/io5";
 
 function PostItem({ post }) {
+  const handleVote = () => {
+    console.log("upvote");
+  };
+
   return (
     <div className="post card">
       <h3 className="post-title">{post.title}</h3>
@@ -23,7 +27,8 @@ function PostItem({ post }) {
       </Link>
       <div className="post-ui">
         <div className="post-ui-left">
-          <ImArrowUp /> <span className="votes"> {post.votes} </span>
+          <ImArrowUp onClick={handleVote} />{" "}
+          <span className="votes"> {post.votes} </span>
           <FaCommentAlt />{" "}
           <span className="comments"> {post.comments_count} </span>
         </div>

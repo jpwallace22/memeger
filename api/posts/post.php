@@ -146,6 +146,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $valid = false;
         $errors['title'] = 'Required and must be under 50 characters';
     }
+    if(strlen($src) < 1 ){
+        $valid = false;
+        $errors['src'] = 'An image is required';
+    }
     //body exists less than 500
     if(strlen($body) < 1 || strlen($body) > 500 ){
         $valid = false;
@@ -161,7 +165,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         http_response_code(500);
     
         // show users data in json format
-        echo json_encode($errors);
+        echo json_encode(['errors' => $errors]);
 
         exit;
     }
