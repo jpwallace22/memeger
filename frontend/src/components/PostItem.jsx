@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../styles/postItem.css";
 import UserContext from "../context/UserContext";
 import { Link, useNavigate } from "react-router-dom";
@@ -7,8 +7,10 @@ import { ImArrowUp } from "react-icons/im";
 import { FaCommentAlt, FaRegHeart, FaHeart } from "react-icons/fa";
 import { IoShareOutline } from "react-icons/io5";
 
-function PostItem({ post }) {
+function PostItem({ post, posts, setPosts }) {
   const { user } = useContext(UserContext);
+
+  const [voted, setVoted] = useState(false);
 
   const navigate = useNavigate();
 
@@ -23,19 +25,46 @@ function PostItem({ post }) {
       body: JSON.stringify(payload),
     });
     const data = await res.text();
+    data ? setVoted(true) : setVoted(false);
   };
 
-  const handleVote = async () => {
+  const handleUpVote = async () => {
     if (user.user_id) {
       const res = await fetch("/api/posts/vote.php", {
         method: "PUT",
         body: JSON.stringify(payload),
       });
       const data = await res.json();
+      checkVote();
+      const newPost = posts.map((single) => ({
+        ...single,
+        votes: single.post_id === post.post_id ? single.votes++ : single.votes,
+      }));
     } else {
       navigate("/login");
     }
   };
+
+  const handleDownVote = async () => {
+    if (user.user_id) {
+      const res = await fetch("/api/posts/vote.php", {
+        method: "PUT",
+        body: JSON.stringify(payload),
+      });
+      const newPost = posts.map((single) => ({
+        ...single,
+        votes: single.post_id === post.post_id ? single.votes-- : single.votes,
+      }));
+      const data = await res.json();
+      checkVote();
+    } else {
+      navigate("/login");
+    }
+  };
+
+  useEffect(() => {
+    checkVote();
+  }, []);
 
   return (
     <div className="post card">
@@ -53,10 +82,14 @@ function PostItem({ post }) {
       </Link>
       <div className="post-ui">
         <div className="post-ui-left">
-          {checkVote() ? (
-            <ImArrowUp onClick={handleVote} color="var(--gold)" />
+          {voted ? (
+            <ImArrowUp
+              className="vote-arrow"
+              onClick={handleDownVote}
+              color="var(--gold)"
+            />
           ) : (
-            <ImArrowUp onClick={handleVote} />
+            <ImArrowUp className="vote-arrow" onClick={handleUpVote} />
           )}
           <span className="votes"> {post.votes} </span>
           <FaCommentAlt />{" "}

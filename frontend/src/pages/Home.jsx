@@ -16,14 +16,16 @@ function Home() {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  async function getTodaysPosts() {
+    setIsLoading(true);
+    const posts = await getPosts(date, undefined, undefined, sortBy);
+    setPosts(posts);
+    setIsLoading(false);
+  }
+
   useEffect(() => {
     //fetch posts for today
-    async function getTodaysPosts() {
-      setIsLoading(true);
-      const posts = await getPosts(date, undefined, undefined, sortBy);
-      setPosts(posts);
-      setIsLoading(false);
-    }
+
     getTodaysPosts();
     //will automatically rerun if the date or sortby options are changed
   }, [date, sortBy, getPosts]);
@@ -48,7 +50,14 @@ function Home() {
               <p>Why not get the ball rolling? Be the first!</p>
             </div>
           ) : (
-            posts.map((post, index) => <PostItem post={post} key={index} />)
+            posts.map((post, index) => (
+              <PostItem
+                posts={posts}
+                post={post}
+                key={index}
+                setPosts={setPosts}
+              />
+            ))
           )}
         </div>
       </main>
