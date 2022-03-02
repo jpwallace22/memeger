@@ -160,4 +160,20 @@ class Users{
         return $stmt;
         }
 
+     /**
+     * UPDATE USER INFO
+     */
+    function update_info($id, $username, $profile_pic, $bio){
+
+        $query = "UPDATE $this->table_name 
+                    SET username=:username, bio=:bio, profile_pic=:profile_pic
+                    WHERE user_id = :id";
+      
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+        // execute query
+        $stmt->execute(['id' => $id, 'username' => $username, 'bio' => $bio, 'profile_pic' => $profile_pic]);
+        return $stmt;
+        }
+
 }

@@ -88,10 +88,10 @@ if($num>0){
         //create access token and set session
         $access_token = bin2hex( random_bytes( 30 ) );
         
-        setcookie( 'access_token', $access_token, time() + 60 * 60 * 24 * 7);
+        setcookie( 'access_token', $access_token, time() + 60 * 60 * 24 * 7, '/');
         $_SESSION["access_token"] = $access_token;
         
-        setcookie( 'user_id', $user['user_id'], time() + 60 * 60 * 24 * 7);
+        setcookie( 'user_id', $user['user_id'], time() + 60 * 60 * 24 * 7, '/');
         $_SESSION["user_id"] = $user['user_id'];
         
         //update last login time and token

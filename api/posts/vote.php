@@ -34,7 +34,7 @@ $posts = new Posts($db);
       
 if($_SERVER['REQUEST_METHOD'] === 'PUT'){
     if (! check_login($user_id)){
-        echo 'ERROR';
+        echo json_encode('Not logged in');
         exit;
     }
     // query posts
@@ -54,11 +54,11 @@ if($_SERVER['REQUEST_METHOD'] === 'PUT'){
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $stmt = $posts->check_vote($post_id, $user_id);
-    echo debug_statement($stmt);
+    // echo debug_statement($stmt);
     $num = $stmt->rowCount();
     if($num>0){
-        echo 'true';
+        echo true;
     } else {
-        echo 'false';
+        echo false;
     }
     }
