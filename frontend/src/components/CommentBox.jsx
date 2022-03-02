@@ -3,7 +3,7 @@ import "../styles/commentBox.css";
 import UserContext from "../context/UserContext";
 import Button from "./Button";
 
-function CommentBox({ post, setComments, comments }) {
+function CommentBox({ post, setComments, comments, setTrigger, trigger }) {
   //global state
   const { user } = useContext(UserContext);
 
@@ -35,14 +35,14 @@ function CommentBox({ post, setComments, comments }) {
       } else {
         setErrors(data.errors);
       }
-      console.log();
+      setTrigger(!trigger);
     } catch (e) {
       throw new Error(e);
     }
   };
 
   return (
-    <div className="card comment-box">
+    <div className="card comment-box" id="comment-box">
       <h3 className="mb-2">Leave a comment</h3>
       {errors.invalid && <span className="error">{errors.invalid}</span>}
       <form onSubmit={(e) => handleSubmit(e, post, user.user_id, commentText)}>

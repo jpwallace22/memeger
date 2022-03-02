@@ -10,10 +10,9 @@ import SearchBar from "../components/SearchBar";
 
 function Home() {
   //Post state
-  const { date, sortBy, getPosts } = useContext(PostContext);
+  const { date, sortBy, getPosts, posts, setPosts } = useContext(PostContext);
 
   //Component State
-  const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   async function getTodaysPosts() {
@@ -28,7 +27,8 @@ function Home() {
 
     getTodaysPosts();
     //will automatically rerun if the date or sortby options are changed
-  }, [date, sortBy, getPosts]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [date, sortBy]);
 
   return (
     <>
@@ -51,12 +51,7 @@ function Home() {
             </div>
           ) : (
             posts.map((post, index) => (
-              <PostItem
-                posts={posts}
-                post={post}
-                key={index}
-                setPosts={setPosts}
-              />
+              <PostItem post={post} key={index} setPosts={setPosts} />
             ))
           )}
         </div>

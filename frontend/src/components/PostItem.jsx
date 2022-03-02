@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useState } from "react";
 import "../styles/postItem.css";
 import UserContext from "../context/UserContext";
@@ -7,7 +8,7 @@ import { ImArrowUp } from "react-icons/im";
 import { FaCommentAlt, FaRegHeart, FaHeart } from "react-icons/fa";
 import { IoShareOutline } from "react-icons/io5";
 
-function PostItem({ post, posts, setPosts }) {
+function PostItem({ post }) {
   const { user } = useContext(UserContext);
 
   const [voted, setVoted] = useState(false);
@@ -36,10 +37,10 @@ function PostItem({ post, posts, setPosts }) {
       });
       const data = await res.json();
       checkVote();
-      const newPost = posts.map((single) => ({
-        ...single,
-        votes: single.post_id === post.post_id ? single.votes++ : single.votes,
-      }));
+      post = {
+        ...post,
+        votes: post.votes++,
+      };
     } else {
       navigate("/login");
     }
@@ -51,12 +52,12 @@ function PostItem({ post, posts, setPosts }) {
         method: "PUT",
         body: JSON.stringify(payload),
       });
-      const newPost = posts.map((single) => ({
-        ...single,
-        votes: single.post_id === post.post_id ? single.votes-- : single.votes,
-      }));
       const data = await res.json();
       checkVote();
+      post = {
+        ...post,
+        votes: post.votes--,
+      };
     } else {
       navigate("/login");
     }
@@ -64,6 +65,7 @@ function PostItem({ post, posts, setPosts }) {
 
   useEffect(() => {
     checkVote();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -91,9 +93,13 @@ function PostItem({ post, posts, setPosts }) {
           ) : (
             <ImArrowUp className="vote-arrow" onClick={handleUpVote} />
           )}
-          <span className="votes"> {post.votes} </span>
-          <FaCommentAlt />{" "}
-          <span className="comments"> {post.comments_count} </span>
+          <span className="votes"> {post.votes} </span>{" "}
+          <Link to={`/post/${post.post_id}`}>
+            <span className="comments">
+              {" "}
+              <FaCommentAlt /> {post.comments_count}{" "}
+            </span>
+          </Link>
         </div>
         <div className="post-ui-right">
           <span className="fav">

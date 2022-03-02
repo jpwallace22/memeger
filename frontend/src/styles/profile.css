@@ -21,6 +21,22 @@
 .p-info img {
   max-width: 200px;
   border-radius: 50%;
+  margin-top: 1rem;
+}
+.p-info img.is-own:hover {
+  opacity: 0.2;
+  cursor: pointer;
+}
+.img {
+  position: relative;
+}
+.img span {
+  position: absolute;
+  top: 45%;
+  left: 49%;
+  font-size: 1.2rem;
+  font-weight: 600;
+  z-index: -1;
 }
 h2.profile-username {
   margin: 1rem 2rem;
@@ -93,4 +109,7 @@ p.bio {
   text-align: center;
   padding: 2rem 0;
   font-size: 2rem;
+}
+input[type="file"] {
+  display: none;
 }

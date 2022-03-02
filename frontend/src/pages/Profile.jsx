@@ -1,5 +1,5 @@
-import React, { useState, useContext, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useContext, useEffect, useRef } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import UserContext from "../context/UserContext";
 import Navbar from "../components/Navbar";
 import "../styles/profile.css";
@@ -9,7 +9,11 @@ import PostItem from "../components/PostItem";
 
 function Profile() {
   //global state
-  const { user: loggedUser, getProfileInfo } = useContext(UserContext);
+  const {
+    user: loggedUser,
+    getProfileInfo,
+    setUser: setLoggedUser,
+  } = useContext(UserContext);
 
   //local state
   const [user, setUser] = useState({});
@@ -17,15 +21,68 @@ function Profile() {
   const [bio, setBio] = useState(`${loggedUser.bio}`);
   const [editName, setEditName] = useState(false);
   const [editBio, setEditBio] = useState(false);
+  const [editImage, setEditImage] = useState(false);
+  const [src, setSrc] = useState(`${loggedUser.profile_pic}`);
+  const [error, setError] = useState("");
 
   //hooks
   const { username } = useParams();
+  const upload = useRef();
+  const navigate = useNavigate();
 
   //close all edit fields
   const handleCancel = (e) => {
     e.preventDefault();
     setEditBio(false);
     setEditName(false);
+    setEditImage(false);
+    setSrc(`${loggedUser.profile_pic}`);
+  };
+
+  const handleImageUpload = async ({ target }) => {
+    const data = new FormData();
+    data.append("uploadedfile", target.files[0]);
+    data.append("user_id", user.user_id);
+    const res = await fetch("/api/users/upload-image.php", {
+      method: "POST",
+      body: data,
+    });
+    const src = await res.json();
+    if (!src.error) {
+      setSrc(src);
+      setEditImage(true);
+    } else {
+      setError(src.error);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const payload = {
+      user_id: loggedUser.user_id,
+      username: formUsername,
+      bio: bio,
+      profile_pic: src,
+    };
+    const res = await fetch("/api/users/update.php", {
+      method: "POST",
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json();
+    if (data === "success") {
+      const newLoggedUser = {
+        ...loggedUser,
+        ...payload,
+      };
+      setLoggedUser(newLoggedUser);
+      localStorage.setItem("loggedUser", JSON.stringify(newLoggedUser));
+      navigate(`/profile/${payload.username}`);
+      setEditBio(false);
+      setEditName(false);
+      setEditImage(false);
+      setSrc(`${payload.profile_pic}`);
+    }
+    //TODO SET ERRORS TO DISPLAY FOR BIO AND USERNAME
   };
 
   useEffect(() => {
@@ -44,8 +101,20 @@ function Profile() {
       <Navbar />
       <main className="profile">
         <div className="p-info">
-          <img src={user.profile_pic} alt={user.username} />
-          <form>
+          <div className="error">{error && error}</div>
+          <div className="img">
+            <img
+              className={isOwnPage ? "is-own" : ""}
+              src={isOwnPage && src ? src : user.profile_pic}
+              alt={isOwnPage ? loggedUser.username : user.username}
+              onClick={isOwnPage ? () => upload.current.click() : null}
+            />
+            <span>
+              <FaEdit />
+            </span>
+          </div>
+
+          <form onSubmit={(e) => handleSubmit(e)}>
             {editName ? (
               <div>
                 <label htmlFor="username" className="sr-only">
@@ -109,7 +178,7 @@ function Profile() {
               <span>Favorites: {user.fav_count}</span>
             </div>
 
-            {(editName || editBio) && (
+            {(editName || editBio || editImage) && (
               <div className="profile-buttons">
                 <Button primary className="save">
                   Save Changes
@@ -134,6 +203,16 @@ function Profile() {
             <h2>You haven't made any posts yet</h2>
           )}
         </div>
+        <input
+          ref={upload}
+          type="file"
+          name="user-image"
+          id="user-image"
+          className="image"
+          onChange={(e) => handleImageUpload(e)}
+          accept="image/png, image/jpeg"
+          encType="multipart/form-data"
+        />
       </main>
     </>
   );

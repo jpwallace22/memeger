@@ -6,16 +6,22 @@ export const PostProvider = ({ children }) => {
   const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
   const [sortBy, setSortBy] = useState("p.date");
   const [search, setSearch] = useState(null);
+  const [posts, setPosts] = useState([]);
+  const [dateDisplay, setDateDisplay] = useState("Today");
 
   //GLOBAL STATE AND FUNCTIONS FOR ALL POSTS
   const postState = {
     date,
     sortBy,
     search,
+    posts,
+    dateDisplay,
+    setDateDisplay,
     setDate,
     setSortBy,
     setSearch,
     getPosts,
+    setPosts,
     getSinglePost,
     registerNewUser,
     getSearchResults,

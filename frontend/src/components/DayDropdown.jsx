@@ -4,25 +4,14 @@ import "../styles/dropdown.css";
 import { BsCaretRightFill } from "react-icons/bs";
 
 function DayDropdown({ handleSort }) {
-  const { setDate } = useContext(PostContext);
-  //TODO set sort display to global state
+  //global state
+  const { setDate, dateDisplay, setDateDisplay } = useContext(PostContext);
 
-  const [todayActive, setTodayActive] = useState(true);
-  const [weekActive, setWeekActive] = useState(false);
-  const [monthActive, setMonthActive] = useState(false);
-  const [allTimeActive, setAllTimeActive] = useState(false);
+  //local state
   const [menuOpen, setMenuOpen] = useState(false);
 
   //hooks
   const ref = useRef();
-
-  //sets all states to false
-  const allStateFalse = () => {
-    setTodayActive(false);
-    setWeekActive(false);
-    setMonthActive(false);
-    setAllTimeActive(false);
-  };
 
   //gets the date in ISO and offsets for past days
   const getDate = (offset = 0) => {
@@ -47,23 +36,19 @@ function DayDropdown({ handleSort }) {
     let data = target.dataset.value;
     switch (data) {
       case "today":
-        allStateFalse();
-        setTodayActive(true);
+        setDateDisplay("Today");
         data = getDate();
         break;
       case "week":
-        allStateFalse();
-        setWeekActive(true);
+        setDateDisplay("Last Week");
         data = getDate(7);
         break;
       case "month":
-        allStateFalse();
-        setMonthActive(true);
+        setDateDisplay("Last Month");
         data = getDate(30);
         break;
       case "allTime":
-        allStateFalse();
-        setAllTimeActive(true);
+        setDateDisplay("All Time");
         data = "0000-00-00";
         break;
       default:
@@ -80,8 +65,6 @@ function DayDropdown({ handleSort }) {
     }
     //close menu if clicked off of it
     window.addEventListener("click", (e) => handleClickOutside(e), true);
-
-    //cleanup
     return () =>
       window.removeEventListener("click", (e) => handleClickOutside(e), true);
   }, [menuOpen]);
@@ -96,8 +79,7 @@ function DayDropdown({ handleSort }) {
       <div className="dropdown-title" onClick={() => setMenuOpen(!menuOpen)}>
         <span>
           {/* makes the title whatever element is currently selected */}
-          {document.querySelector(".dropdown-option.active") &&
-            document.querySelector(".dropdown-option.active").innerHTML}
+          {dateDisplay}
           <BsCaretRightFill size={15} className="dropdown-caret" />
         </span>
       </div>
@@ -119,36 +101,28 @@ function DayDropdown({ handleSort }) {
         </svg>
         <ul className="dropdown-list">
           <li
-            className={
-              todayActive ? "dropdown-option active" : "dropdown-option"
-            }
+            className="dropdown-option"
             data-value="today"
             onClick={({ target }) => handleClick(target)}
           >
             Today
           </li>
           <li
-            className={
-              weekActive ? "dropdown-option active" : "dropdown-option"
-            }
+            className="dropdown-option"
             data-value="week"
             onClick={({ target }) => handleClick(target)}
           >
             Last Week
           </li>
           <li
-            className={
-              monthActive ? "dropdown-option active" : "dropdown-option"
-            }
+            className="dropdown-option"
             data-value="month"
             onClick={({ target }) => handleClick(target)}
           >
             Last Month
           </li>
           <li
-            className={
-              allTimeActive ? "dropdown-option active" : "dropdown-option"
-            }
+            className="dropdown-option"
             data-value="allTime"
             onClick={({ target }) => handleClick(target)}
           >

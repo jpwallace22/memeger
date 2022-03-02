@@ -9,12 +9,13 @@ import Loader from "../components/Loader";
 import CommentBox from "../components/CommentBox";
 
 function SinglePost() {
-  const { getSinglePost } = useContext(PostContext);
+  const { getSinglePost, posts } = useContext(PostContext);
   const { user } = useContext(UserContext);
 
   const [post, setPost] = useState([]);
   const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [trigger, setTrigger] = useState(false);
   const { id } = useParams();
 
   useEffect(() => {
@@ -26,7 +27,7 @@ function SinglePost() {
       setIsLoading(false);
     }
     getPost();
-  }, [id, getSinglePost]);
+  }, [id, trigger]);
 
   return (
     <>
@@ -41,7 +42,7 @@ function SinglePost() {
             <h2>{post.error}</h2>
           ) : (
             <>
-              <PostItem post={post} />
+              <PostItem post={post} posts={posts} />
               <div className="card">
                 <h2>{post.comments_count} Comments</h2>
                 {comments.error
@@ -56,6 +57,8 @@ function SinglePost() {
                     post={post.post_id}
                     setComments={setComments}
                     comments={comments}
+                    setTrigger={setTrigger}
+                    trigger={trigger}
                   />
                 ) : (
                   <div className="card not-logged">
