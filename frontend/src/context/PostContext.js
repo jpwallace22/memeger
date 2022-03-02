@@ -27,7 +27,7 @@ export const PostProvider = ({ children }) => {
     getSearchResults,
   };
 
-  //---------FUNCTIONS------------//
+  //---------FUNCTIONS------------///
 
   /**
    * FETCHES ALL POSTS FROM API BASED ON DATE CONFIG
