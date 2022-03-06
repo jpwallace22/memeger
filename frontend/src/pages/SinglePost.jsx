@@ -43,14 +43,16 @@ function SinglePost() {
           ) : (
             <>
               <PostItem post={post} posts={posts} />
-              <div className="card">
-                <h2>{post.comments_count} Comments</h2>
-                {comments.error
-                  ? comments.error
-                  : comments.map((comment, index) => (
-                      <Comment comment={comment} key={index} />
-                    ))}
-              </div>
+              {post.allow_comments !== "0" && (
+                <div className="card">
+                  <h2>{post.comments_count} Comments</h2>
+                  {comments.error
+                    ? comments.error
+                    : comments.map((comment, index) => (
+                        <Comment comment={comment} key={index} />
+                      ))}
+                </div>
+              )}
               {post.allow_comments !== "0" &&
                 (user.user_id ? (
                   <CommentBox

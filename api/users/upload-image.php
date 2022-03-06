@@ -15,7 +15,7 @@ if( isset($_FILES['uploadedfile']['tmp_name']) ){
 	//grab the image that they uploaded
 	$uploadedfile = $_FILES['uploadedfile']['tmp_name'];
     $user_id = clean_int($_POST["user_id"]);
-	echo $uploadedfile;
+	
     if(!check_login($user_id)){
        echo "FAIL";
         exit;

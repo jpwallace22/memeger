@@ -30,6 +30,16 @@ function Profile() {
   const upload = useRef();
   const navigate = useNavigate();
 
+  //create a better looking date
+  const joinDate = user.join_date ? user.join_date.split(" ")[0] : null;
+  const prettyDate = (date) => {
+    return new Date(date).toLocaleDateString("en-us", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+  };
+
   //close all edit fields
   const handleCancel = (e) => {
     e.preventDefault();
@@ -140,7 +150,6 @@ function Profile() {
                 )}
               </div>
             )}
-
             {editBio ? (
               <div>
                 <label htmlFor="bio" className="sr-only">
@@ -172,10 +181,21 @@ function Profile() {
               </div>
             )}
 
+            <div className="member-since">
+              Member Since: {prettyDate(joinDate)}{" "}
+            </div>
+
             <div className="stats">
-              <span>Wins: {user.win_count}</span>
-              <span>Posts: {user.posts && user.posts.length}</span>
-              <span>Favorites: {user.fav_count}</span>
+              <span>
+                <span className="white">Wins:</span> {user.win_count}
+              </span>
+              <span>
+                <span className="white">Posts:</span>{" "}
+                {user.posts && user.posts.length}
+              </span>
+              <span>
+                <span className="white">Favorites:</span> {user.fav_count}
+              </span>
             </div>
 
             {(editName || editBio || editImage) && (
